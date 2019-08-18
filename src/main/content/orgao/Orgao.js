@@ -82,6 +82,7 @@ class Orgao extends Component {
                             margin="dense"
                             id="name"
                             label="Nome"
+                            required
                             type="text"
                         />
                         <TextField
