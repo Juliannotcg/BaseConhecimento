@@ -3,8 +3,12 @@ import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
 import { OrgaoList } from './OrgaoList';
 import Icon from "@material-ui/core/es/Icon/Icon";
-import OrgaoForm from './OrgaoForm';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     layoutRoot: {},
@@ -17,8 +21,6 @@ const styles = theme => ({
     }
 });
 
-
-
 class Orgao extends Component {
     constructor(props) {
         super(props);
@@ -26,48 +28,76 @@ class Orgao extends Component {
             open: false
         }
 
-        this.addForm = this.addForm.bind(this);
+        this.openDialog = this.openDialog.bind(this);
     }
 
-    addForm = (valor) => {
-       this.setState({open: valor})
-    };
-  
+    openDialog = (value) => {
+        this.setState({ open: value })
+    }
+
     render() {
         const { classes } = this.props;
 
         return (
-            <FusePageSimple
-                classes={{
-                    root: classes.layoutRoot
-                }}
-                header={
-                    <div className="p-24"><h4>Orgão</h4></div>
-                }
-                contentToolbar={
-                    <div>
-                        <h4>Orgãos</h4>
-                        <div >
-                            <Button
-                                variant="fab"
-                                color="primary"
-                                aria-label="add"
-                                className={classes.addButton}
-                                onClick={() => this.addForm(true)}
-                            >
-                            <Icon>note_add</Icon>
-                            </Button>
-
-                            <OrgaoForm abrir = {this.state.open}/>
+            <div>
+                <FusePageSimple
+                    classes={{
+                        root: classes.layoutRoot
+                    }}
+                    header={
+                        <div className="p-24"><h4>Orgão</h4></div>
+                    }
+                    contentToolbar={
+                        <div>
+                            <h4>Orgãos</h4>
+                            <div >
+                                <Button
+                                    variant="fab"
+                                    color="primary"
+                                    aria-label="add"
+                                    className={classes.addButton}
+                                    onClick={() => this.openDialog(true)}
+                                >
+                                    <Icon>note_add</Icon>
+                                </Button>
+                            </div>
                         </div>
-                    </div>
-                }
-                content={
-                    <div >
-                        <OrgaoList />
-                    </div>
-                }
-            />
+                    }
+                    content={
+                            <OrgaoList />
+                    }
+                />
+                <Dialog
+                    open={this.state.open}
+                    onExited={() => this.openDialog(false)}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle
+                        id="alert-dialog-title">{"Novo orgão"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Nome"
+                            type="text"
+                        />
+                        <TextField
+                            margin="dense"
+                            id="name"
+                            label="Descrição"
+                            type="text"
+                            fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color="primary" onClick={() => this.openDialog(false)}>Cancelar</Button>
+                        <Button color="primary">Salvar</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
         )
     }
 }
