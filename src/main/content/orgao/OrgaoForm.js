@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { TextField } from '@material-ui/core/es';
 
 export default class OrgaoForm extends React.Component {
     render() {
@@ -12,9 +13,9 @@ export default class OrgaoForm extends React.Component {
                 }}
                 validationSchema={Yup.object().shape({
                     nome: Yup.string()
-                        .required('First Name is required'),
+                        .required('O campo nome é obrigatório.'),
                     descricao: Yup.string()
-                        .required('Last Name is required')
+                        .required('O campo descrição é obrigatório.')
                 })}
                 onSubmit={fields => {
                     alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
@@ -23,12 +24,12 @@ export default class OrgaoForm extends React.Component {
                     <Form>
                         <div className="form-group">
                             <label htmlFor="nome">First Name</label>
-                            <Field name="nome" type="text" className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} />
+                            <TextField name="nome" type="text" className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} />
                             <ErrorMessage name="nome" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="descricao">Last Name</label>
-                            <Field name="descricao" type="text" className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} />
+                            <TextField name="descricao" type="text" className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} />
                             <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group">
@@ -41,3 +42,48 @@ export default class OrgaoForm extends React.Component {
         )
     }
 }
+
+// function registrar(values, setStatus, setSubmitting, setErrors, setError, props) {
+//     var dados = obterValoresDoValues(values, props);
+
+//     API.Prestador.post('/DadosFinanceiros', dados).then((response) => {
+//         var objRetorno = {
+//             success: true,
+//             mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
+//         };
+
+//         setStatus(objRetorno);
+//         setSubmitting(false);
+//         PubSub.publish("withLoading", false);
+//     }, reject => {
+//         if (Array.isArray(reject))
+//             setErrors(reject);
+//         if (typeof (reject) === "string")
+//             setError(reject);
+//         PubSub.publish("withLoading", false);
+//         setSubmitting(false);
+//     });
+
+//     window.scrollTo(0, 0);
+// }
+
+
+// const obterValoresDoValues = (values = {}, props) => {
+//     const { prestador } = props;
+
+//     const resultado = {
+//         "idPrestador": prestador.id,
+//         "dadoBancario": {
+//             "idDadoBncro": values["idDadoBncro"],
+//             "idAgencia": values["agencia"],
+//             "idTipoConta": values["tipodeconta"],
+//             "idPessoa": prestador.id,
+//             "cdOprco": values[""],
+//             "nrCnta": values["nºdaconta"],
+//             "nrDvCnta": values["dv"]
+//         },
+//         impostos: values["impostos"]
+//     };
+
+//     return resultado;
+// }
