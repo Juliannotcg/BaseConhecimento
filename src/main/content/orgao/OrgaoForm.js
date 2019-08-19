@@ -3,7 +3,10 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from '@material-ui/core/es';
 
+
+
 export default class OrgaoForm extends React.Component {
+   
     render() {
         return (
             <Formik
@@ -24,16 +27,21 @@ export default class OrgaoForm extends React.Component {
                     <Form>
                         <div className="form-group">
                             <label htmlFor="nome">Nome</label>
-                            <TextField 
+                            <Field 
                             fullWidth 
                             name="nome" 
                             type="text" 
-                            className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} />
+                            className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')}
+                            render={({field}) => (
+                                <div>
+                                  <TextField {...field} />
+                                </div>)} 
+                                />
                             <ErrorMessage name="nome" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="descricao">Descrição</label>
-                            <TextField 
+                            <Field 
                             fullWidth 
                             name="descricao" 
                             type="text" 
