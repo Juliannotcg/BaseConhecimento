@@ -16,6 +16,27 @@ export class OrgaoList extends Component {
         };
     }
 
+
+    // function registrar(values, setStatus, setSubmitting, setErrors, setError, props) {
+    //     API.TipoPrestador.post("/tipoprestador", obterValoresDoValues(values))
+    //     .then(sucesso => {
+    //         setStatus({
+    //             houveInsercao: true,
+    //             mensagemSucesso: "Tipo de Prestador cadastrado com sucesso."
+    //         });
+    //         setSubmitting(false);
+    //         props.onTipoPrestadorAdicionada();
+    //     }, reject => {
+    //         if (Array.isArray(reject))
+    //             setErrors(reject);
+    //         if (typeof (reject) === "string")
+    //             setError(reject);
+    //         setSubmitting(false);
+    //     });
+    // }
+
+
+
     componentDidMount() {
         this.getDate();
     }
@@ -28,6 +49,15 @@ export class OrgaoList extends Component {
             this.setState({loaded:true});
                 console.log(error);
         });
+
+        // API.TipoPrestador.post("/tipoprestador/busca", this.state.filtro)
+        // .then(tipoPrestadores => {
+        //     this.setState({ tipoPrestadores: tipoPrestadores, mainLoading: false })
+        // }, (evt) => this.mostrarMensagemErro({ mainLoading: false }, evt));
+
+
+
+
     };
 
     render() {
