@@ -23,13 +23,21 @@ export default class OrgaoForm extends React.Component {
                 render={({ errors, status, touched }) => (
                     <Form>
                         <div className="form-group">
-                            <label htmlFor="nome">First Name</label>
-                            <TextField name="nome" type="text" className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} />
+                            <label htmlFor="nome">Nome</label>
+                            <TextField 
+                            fullWidth 
+                            name="nome" 
+                            type="text" 
+                            className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')} />
                             <ErrorMessage name="nome" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="descricao">Last Name</label>
-                            <TextField name="descricao" type="text" className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} />
+                            <label htmlFor="descricao">Descrição</label>
+                            <TextField 
+                            fullWidth 
+                            name="descricao" 
+                            type="text" 
+                            className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} />
                             <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group">
