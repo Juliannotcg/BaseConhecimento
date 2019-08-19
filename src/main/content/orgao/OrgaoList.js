@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Icon from "@material-ui/core/es/Icon/Icon";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
+import Paper from "@material-ui/core/es/Paper/Paper";
 import axios from "axios";
 
 const styles = theme => ({
@@ -51,6 +52,8 @@ export class OrgaoList extends Component {
                 this.setState({loaded: false});
                 console.log(error)
             })
+
+       
     };
 
 
@@ -121,13 +124,13 @@ export class OrgaoList extends Component {
                                 <IconButton>
                                     <Icon>edit</Icon>
                                 </IconButton>
-                                <IconButton
-                                  onClick={(ev) => {
-                                    ev.stopPropagation();
-                                    this.removeForm(ids[row.index]);
-                                }}>
-                                    <Icon>delete</Icon>
-                                </IconButton>
+                                    <IconButton
+                                        onClick={(ev) => {
+                                        ev.stopPropagation();
+                                        this.removeForm(ids[row.index]);
+                                    }}>
+                                        <Icon>delete</Icon>
+                                    </IconButton>
                             </div>
                         )
                     }
@@ -137,3 +140,4 @@ export class OrgaoList extends Component {
         );
     }
 }
+
