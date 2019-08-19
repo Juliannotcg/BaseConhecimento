@@ -14,6 +14,7 @@
         "chart.js": "2.7.2",
         "downshift": "2.0.10",
         "firebase": "5.2.0",
+        "formik": "^1.5.8",
         "formsy-react": "1.1.4",
         "google-map-react": "1.0.5",
         "husky": "^3.0.3",
@@ -54,7 +55,8 @@
         "redux": "4.0.0",
         "redux-thunk": "2.3.0",
         "typeface-roboto": "0.0.54",
-        "velocity-react": "1.4.1"
+        "velocity-react": "1.4.1",
+        "yup": "^0.27.0"
     },
     "scripts": {
         "start": "yarn run build-css-helpers && cross-env NODE_PATH=src react-scripts start",

@@ -8,7 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import OrgaoForm from './OrgaoForm';
 
 const styles = theme => ({
     layoutRoot: {},
@@ -77,21 +77,7 @@ class Orgao extends Component {
                         id="alert-dialog-title">{"Novo orgão"}
                     </DialogTitle>
                     <DialogContent>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Nome"
-                            required
-                            type="text"
-                        />
-                        <TextField
-                            margin="dense"
-                            id="name"
-                            label="Descrição"
-                            type="text"
-                            fullWidth
-                        />
+                        <OrgaoForm />
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" onClick={() => this.openDialog(false)}>Cancelar</Button>
