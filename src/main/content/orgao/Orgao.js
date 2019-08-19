@@ -9,6 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import OrgaoForm from './OrgaoForm';
+import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
 
 const styles = theme => ({
     layoutRoot: {},
@@ -51,6 +52,7 @@ class Orgao extends Component {
                         <div>
                             <h4>Orgãos</h4>
                             <div >
+                            <FuseAnimate animation="transition.slideLeftIn" delay={600}>
                                 <Button
                                     variant="fab"
                                     color="primary"
@@ -60,6 +62,7 @@ class Orgao extends Component {
                                 >
                                     <Icon>note_add</Icon>
                                 </Button>
+                            </ FuseAnimate>
                             </div>
                         </div>
                     }

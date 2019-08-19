@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import ReactTable from "react-table";
 import {withStyles} from '@material-ui/core/styles';
+import Icon from "@material-ui/core/es/Icon/Icon";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
 import axios from "axios";
 
 const styles = theme => ({
@@ -13,6 +16,7 @@ export class OrgaoList extends Component {
 
         this.state = {
             forms: {},
+            loaded: false
         };
     }
 
@@ -36,12 +40,27 @@ export class OrgaoList extends Component {
     // }
 
 
+    removeForm = (id) => {
+        this.setState({loaded: true});
+        axios.delete("https://valued-mediator-138113.firebaseio.com/forms/" +id+".json")
+            .then((res)=>{
+                this.setState({loaded: false});
+                this.getDate();
+            })
+            .catch((error)=>{
+                this.setState({loaded: false});
+                console.log(error)
+            })
+    };
+
+
 
     componentDidMount() {
         this.getDate();
     }
 
     getDate = () => {
+        this.setState({loaded:true});
         axios.get('https://valued-mediator-138113.firebaseio.com/forms.json')
             .then((response)=>{
                 this.setState({forms: response.data, loaded: true});
@@ -70,8 +89,15 @@ export class OrgaoList extends Component {
             return this.state.forms[key]
         });
 
+        
+
         return (
             <div>
+                <FuseAnimate animation="transition.slideLeftIn" delay={200}>
+                        <div>
+                            {this.state.loaded}
+                        </div>
+                </FuseAnimate>
                 <ReactTable  data={data}
                 autoGenerateColumns={ true }
                 defaultPageSize={10}
@@ -79,12 +105,31 @@ export class OrgaoList extends Component {
 
                     {
                         Header  : "Nome",
+                        width : 350,
                         Cell: row => row.original.schema.title
                     },
                     {
                         Header  : "Descrição",
                         id      : "description",
                         Cell: row => row.original.schema.description
+                    },
+                    {
+                        Header: "",
+                        width : 130,
+                        Cell  : (row, index) => (
+                            <div className="flex items-center">
+                                <IconButton>
+                                    <Icon>edit</Icon>
+                                </IconButton>
+                                <IconButton
+                                  onClick={(ev) => {
+                                    ev.stopPropagation();
+                                    this.removeForm(ids[row.index]);
+                                }}>
+                                    <Icon>delete</Icon>
+                                </IconButton>
+                            </div>
+                        )
                     }
 
                 ]} />
