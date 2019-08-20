@@ -11,7 +11,7 @@ const interpretarResposta = json => {
 const urlBase = "https://localhost:44342/api";
 
 class API {
-    static TipoPrestador = class {
+    static BaseConhecimento = class {
         static post(resource, data) {
             return fetch(urlBase + resource, {
                 headers: {

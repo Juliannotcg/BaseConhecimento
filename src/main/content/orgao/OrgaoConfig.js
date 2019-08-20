@@ -1,4 +1,4 @@
-import Orgao from './Orgao';
+import OrgaoPage from './OrgaoPage';
 
 export const OrgaoConfig = {
     settings: {
@@ -9,7 +9,7 @@ export const OrgaoConfig = {
     routes  : [
         {
             path     : '/orgao',
-            component: Orgao
+            component: OrgaoPage
         }
     ]
 };

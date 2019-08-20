@@ -6,14 +6,23 @@ import Button from '@material-ui/core/Button';
 import API from '../../API/API';
 
 export default class OrgaoForm extends React.Component {
+    constructor(props) {
+        super(props);
+    }
    
     render() {
+        let obj = {
+            nome: '',
+            descricao: ''
+        };
+
+        if(this.props.isEdicao && this.props.item) {
+            obj.nome = this.props.item.nome;
+        }
+
         return (
             <Formik
-                initialValues={{
-                    nome: '',
-                    descricao: ''
-                }}
+                initialValues={obj}
                 validationSchema={Yup.object().shape({
                     nome: Yup.string()
                         .required('O campo nome é obrigatório.'),
@@ -70,14 +79,13 @@ export default class OrgaoForm extends React.Component {
 }
 
 function registrar(values) {
-
-
-    API.TipoPrestador.post('/Orgao', values).then((response) => {
+    API.BaseConhecimento.post('/Orgao', values).then((response) => {
         var objRetorno = {
             success: true,
             mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
         };
 
+        //props.onClose();
         // setStatus(objRetorno);
         // setSubmitting(false);
         // PubSub.publish("withLoading", false);
@@ -89,22 +97,3 @@ function registrar(values) {
 }
 
 
-// const obterValoresDoValues = (values = {}, props) => {
-//     const { prestador } = props;
-
-//     const resultado = {
-//         "idPrestador": prestador.id,
-//         "dadoBancario": {
-//             "idDadoBncro": values["idDadoBncro"],
-//             "idAgencia": values["agencia"],
-//             "idTipoConta": values["tipodeconta"],
-//             "idPessoa": prestador.id,
-//             "cdOprco": values[""],
-//             "nrCnta": values["nºdaconta"],
-//             "nrDvCnta": values["dv"]
-//         },
-//         impostos: values["impostos"]
-//     };
-
-//     return resultado;
-// }
