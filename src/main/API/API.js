@@ -1,4 +1,3 @@
-import delay from "./delay.js";
 
 const lookUp = {};
 const lerComoJson = respostaHttp => respostaHttp.json();
@@ -9,10 +8,12 @@ const interpretarResposta = json => {
     return Promise.reject(json.errors);
 }
 
+const urlBase = "https://localhost:44342/api";
+
 class API {
     static TipoPrestador = class {
         static post(resource, data) {
-            return fetch(process.env.REACT_APP_TIPO_PRESTADOR_API_URL + resource, {
+            return fetch(urlBase + resource, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json-patch+json'
@@ -24,9 +25,8 @@ class API {
                 .then(interpretarResposta);
         }
 
-
         static put(resource, data) {
-            return fetch(process.env.REACT_APP_TIPO_PRESTADOR_API_URL + resource, {
+            return fetch(urlBase + resource, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json-patch+json'
@@ -39,7 +39,7 @@ class API {
         }
 
         static delete(resource) {
-            return fetch(process.env.REACT_APP_TIPO_PRESTADOR_API_URL + resource, {
+            return fetch(urlBase + resource, {
                 method: "DELETE"
             })
                 .then(lerComoJson)
@@ -47,7 +47,7 @@ class API {
         }
 
         static get(resource) {
-            return fetch(process.env.REACT_APP_TIPO_PRESTADOR_API_URL + resource)
+            return fetch(urlBase + resource)
                 .then(lerComoJson)
                 .then(interpretarResposta)
         }

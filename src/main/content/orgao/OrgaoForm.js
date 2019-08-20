@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from '@material-ui/core/es';
-
-
+import Button from '@material-ui/core/Button';
+import API from '../../API/API';
 
 export default class OrgaoForm extends React.Component {
    
@@ -21,6 +21,7 @@ export default class OrgaoForm extends React.Component {
                         .required('O campo descrição é obrigatório.')
                 })}
                 onSubmit={fields => {
+                    registrar(fields);
                     alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
                 }}
                 render={({ errors, status, touched }) => (
@@ -45,12 +46,21 @@ export default class OrgaoForm extends React.Component {
                             fullWidth 
                             name="descricao" 
                             type="text" 
-                            className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} />
+                            className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} 
+                            render={({field}) => (
+                                <div>
+                                  <TextField {...field} />
+                                </div>)} 
+                            />
                             <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="btn btn-primary mr-2">Register</button>
-                            <button type="reset" className="btn btn-secondary">Reset</button>
+                            <button 
+                            type="submit" 
+                            className="btn btn-primary mr-2">Register</button>
+                            <button 
+                            type="reset"
+                            className="btn btn-secondary">Reset</button>
                         </div>
                     </Form>
                 )}
@@ -59,29 +69,24 @@ export default class OrgaoForm extends React.Component {
     }
 }
 
-// function registrar(values, setStatus, setSubmitting, setErrors, setError, props) {
-//     var dados = obterValoresDoValues(values, props);
+function registrar(values) {
 
-//     API.Prestador.post('/DadosFinanceiros', dados).then((response) => {
-//         var objRetorno = {
-//             success: true,
-//             mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
-//         };
 
-//         setStatus(objRetorno);
-//         setSubmitting(false);
-//         PubSub.publish("withLoading", false);
-//     }, reject => {
-//         if (Array.isArray(reject))
-//             setErrors(reject);
-//         if (typeof (reject) === "string")
-//             setError(reject);
-//         PubSub.publish("withLoading", false);
-//         setSubmitting(false);
-//     });
+    API.TipoPrestador.post('/Orgao', values).then((response) => {
+        var objRetorno = {
+            success: true,
+            mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
+        };
 
-//     window.scrollTo(0, 0);
-// }
+        // setStatus(objRetorno);
+        // setSubmitting(false);
+        // PubSub.publish("withLoading", false);
+    }, reject => {
+        console.log(reject);
+    });
+
+    window.scrollTo(0, 0);
+}
 
 
 // const obterValoresDoValues = (values = {}, props) => {

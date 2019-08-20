@@ -84,7 +84,7 @@ class Orgao extends Component {
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" onClick={() => this.openDialog(false)}>Cancelar</Button>
-                        <Button color="primary">Salvar</Button>
+                    
                     </DialogActions>
                 </Dialog>
             </div>

@@ -64,7 +64,7 @@ export class OrgaoList extends Component {
 
     getDate = () => {
         this.setState({loaded:true});
-        axios.get('https://valued-mediator-138113.firebaseio.com/forms.json')
+        axios.get('https://localhost:44342/api/orgao')
             .then((response)=>{
                 this.setState({forms: response.data, loaded: true});
             }).catch((error)=>{
@@ -85,14 +85,12 @@ export class OrgaoList extends Component {
     render() {
 
         let data = [];
-        let ids = [];
+        let id = [];
     
         data = Object.keys(this.state.forms).map((key)=>{
-            ids.push(key);
+            id.push(key);
             return this.state.forms[key]
         });
-
-        
 
         return (
             <div>
@@ -109,12 +107,13 @@ export class OrgaoList extends Component {
                     {
                         Header  : "Nome",
                         width : 350,
-                        Cell: row => row.original.schema.title
+                        id      : "nome",
+                        accessor: d => d.nome
                     },
                     {
                         Header  : "Descrição",
-                        id      : "description",
-                        Cell: row => row.original.schema.description
+                        id      : "descricao",
+                        accessor: d => d.descricao
                     },
                     {
                         Header: "",
@@ -127,7 +126,7 @@ export class OrgaoList extends Component {
                                     <IconButton
                                         onClick={(ev) => {
                                         ev.stopPropagation();
-                                        this.removeForm(ids[row.index]);
+                                        this.removeForm(id[row.index]);
                                     }}>
                                         <Icon>delete</Icon>
                                     </IconButton>
