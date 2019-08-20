@@ -44,8 +44,7 @@ class OrgaoPage extends Component {
                             <h4>Orgãos</h4>
                             <div >
                                 <FuseAnimate animation="transition.slideLeftIn" delay={600}>
-                                    <OrgaoButton
-                                        classes={classes} />
+                                    <OrgaoButton classes={classes} />
                                 </ FuseAnimate>
                             </div>
                         </div>

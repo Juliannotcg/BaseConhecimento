@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
 import { OrgaoList } from './OrgaoList';
 import Icon from "@material-ui/core/es/Icon/Icon";
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -15,6 +16,7 @@ export default class OrgaoModal extends Component {
     constructor(props) {
         super(props);
     }
+
     
     render() {
         const { open, onClose, item, isEdicao } = this.props;
@@ -24,7 +26,9 @@ export default class OrgaoModal extends Component {
                 <Dialog
                     open={open}
                     aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description">
+                    aria-describedby="alert-dialog-description"
+                    fullWidth
+                    maxWidth = 'sm'>
                     <Fragment>
                         <DialogTitle
                             id="alert-dialog-title">{"Novo orgão"}
@@ -35,9 +39,6 @@ export default class OrgaoModal extends Component {
                                 isEdicao={isEdicao}
                                 item={item} />
                         </DialogContent>
-                        <DialogActions>
-                            <Button color="primary" onClick={onClose}>Cancelar</Button>
-                        </DialogActions>
                     </Fragment>
                 </Dialog>
             </div>

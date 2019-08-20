@@ -9,71 +9,73 @@ export default class OrgaoForm extends React.Component {
     constructor(props) {
         super(props);
     }
-   
+
     render() {
+        const{onClose, item} = this.props;
         let obj = {
             nome: '',
             descricao: ''
         };
 
-        if(this.props.isEdicao && this.props.item) {
-            obj.nome = this.props.item.nome;
+        if (this.props.isEdicao && this.props.item) {
+            obj.nome = item.nome;
+            obj.descricao = item.descricao;
         }
 
         return (
-            <Formik
-                initialValues={obj}
-                validationSchema={Yup.object().shape({
-                    nome: Yup.string()
-                        .required('O campo nome é obrigatório.'),
-                    descricao: Yup.string()
-                        .required('O campo descrição é obrigatório.')
-                })}
-                onSubmit={fields => {
-                    registrar(fields);
-                    alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
-                }}
-                render={({ errors, status, touched }) => (
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor="nome">Nome</label>
-                            <Field 
-                            fullWidth 
-                            name="nome" 
-                            type="text" 
-                            className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')}
-                            render={({field}) => (
-                                <div>
-                                  <TextField {...field} />
-                                </div>)} 
+            <React.Fragment>
+                <Formik
+                    initialValues={obj}
+                    validationSchema={Yup.object().shape({
+                        nome: Yup.string()
+                            .required('O campo nome é obrigatório.'),
+                        descricao: Yup.string()
+                            .required('O campo descrição é obrigatório.')
+                    })}
+                    onSubmit={fields => {
+                        registrar(fields);
+                        alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
+                    }}
+                    render={({ errors, status, touched }) => (
+                        <Form>
+                            <div className="form-group">
+                                <label htmlFor="nome">Nome</label>
+                                <Field
+                                    fullWidth
+                                    name="nome"
+                                    type="text"
+                                    className={'form-control' + (errors.nome && touched.nome ? ' is-invalid' : '')}
+                                    render={({ field }) => (
+                                        <div>
+                                            <TextField fullWidth {...field} />
+                                        </div>)}
                                 />
-                            <ErrorMessage name="nome" component="div" className="invalid-feedback" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="descricao">Descrição</label>
-                            <Field 
-                            fullWidth 
-                            name="descricao" 
-                            type="text" 
-                            className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')} 
-                            render={({field}) => (
-                                <div>
-                                  <TextField {...field} />
-                                </div>)} 
-                            />
-                            <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
-                        </div>
-                        <div className="form-group">
-                            <button 
-                            type="submit" 
-                            className="btn btn-primary mr-2">Register</button>
-                            <button 
-                            type="reset"
-                            className="btn btn-secondary">Reset</button>
-                        </div>
-                    </Form>
-                )}
-            />
+                                <ErrorMessage name="nome" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="descricao">Descrição</label>
+                                <Field
+                                    fullWidth
+                                    name="descricao"
+                                    type="text"
+                                    className={'form-control' + (errors.descricao && touched.descricao ? ' is-invalid' : '')}
+                                    render={({ field }) => (
+                                        <div>
+                                            <TextField fullWidth {...field} />
+                                        </div>)}
+                                />
+                                <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
+                            </div>
+                            <div className="form-group">
+                                <Button type="submit" >Register</Button>
+                                <Button 
+                                type="reset"
+                                className="btn btn-secondary"
+                                onClick={onClose}>Cancelar</Button>
+                            </div>
+                        </Form>
+        )}/>
+             </React.Fragment>
         )
     }
 }
