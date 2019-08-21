@@ -20,7 +20,7 @@ export default class OrgaoButton extends Component {
     }
 
     render() {
-        const { isEdicao, classes, item } = this.props
+        const { isEdicao, classes, item, onOrgaoAdicionado } = this.props
 
         return <Fragment>
             <If test={isEdicao}>
@@ -44,7 +44,8 @@ export default class OrgaoButton extends Component {
                 item={item}
                 isEdicao={isEdicao}
                 onClose={() => this.openDialog(false)}
-                open={this.state.open}/>
+                open={this.state.open}
+                onOrgaoAdicionado={onOrgaoAdicionado}/>
         </Fragment>
     }
 }

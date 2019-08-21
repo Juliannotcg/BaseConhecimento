@@ -11,7 +11,7 @@ export default class OrgaoForm extends React.Component {
     }
 
     render() {
-        const{onClose, item} = this.props;
+        const{onClose, item, onOrgaoAdicionado} = this.props;
         let obj = {
             nome: '',
             descricao: ''
@@ -33,9 +33,7 @@ export default class OrgaoForm extends React.Component {
                             .required('O campo descrição é obrigatório.')
                     })}
                     onSubmit={fields => {
-                        registrar(fields);
-                        this.props.atualizar();
-
+                        registrar(fields, onOrgaoAdicionado);
                         console.log("Teste", this.props.atualizar());
                     }}
                     render={({ errors, status, touched }) => (
@@ -82,19 +80,15 @@ export default class OrgaoForm extends React.Component {
     }
 }
 
-function registrar(values) {
+function registrar(values, onOrgaoAdicionado, onClose) {
 
     API.BaseConhecimento.post('/Orgao', values).then((response) => {
         var objRetorno = {
             success: true,
             mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
         };
-        
-
-        //props.onClose();
-        // setStatus(objRetorno);
-        // setSubmitting(false);
-        // PubSub.publish("withLoading", false);
+        onOrgaoAdicionado();
+        onClose();
     }, reject => {
         console.log(reject);
     });

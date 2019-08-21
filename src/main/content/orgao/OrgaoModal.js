@@ -19,7 +19,7 @@ export default class OrgaoModal extends Component {
 
     
     render() {
-        const { open, onClose, item, isEdicao, atualizar } = this.props;
+        const { open, onClose, item, isEdicao, onOrgaoAdicionado } = this.props;
 
         return (
             <div>
@@ -37,7 +37,8 @@ export default class OrgaoModal extends Component {
                             <OrgaoForm 
                                 onClose={onClose}
                                 isEdicao={isEdicao}
-                                item={item}/>
+                                item={item}
+                                onOrgaoAdicionado={onOrgaoAdicionado}/>
                         </DialogContent>
                     </Fragment>
                 </Dialog>

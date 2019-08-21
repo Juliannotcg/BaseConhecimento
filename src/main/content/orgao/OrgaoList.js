@@ -36,31 +36,17 @@ export class OrgaoList extends Component {
             })
     };
 
-    componentDidMount() {
-        this.getDate();
-    }
-
-    getDate = () => {
-        this.setState({ loaded: true });
-
-        axios.get('https://localhost:44342/api/orgao')
-            .then((response)=>{
-                this.setState({forms: response.data, loaded: true});
-            }).catch((error)=>{
-            this.setState({loaded:true});
-                console.log(error);
-        });
-    };
 
     render() {
-        const { classes } = this.props;
+        const { classes, onOrgaoAdicionado, dataForm } = this.props;
+        onOrgaoAdicionado();
 
         let data = [];
         let id = [];
 
-        data = Object.keys(this.state.forms).map((key) => {
+        data = Object.keys(dataForm).map((key) => {
             id.push(key);
-            return this.state.forms[key]
+            return dataForm[key]
         });
 
 

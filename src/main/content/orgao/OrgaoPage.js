@@ -3,10 +3,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
 import { OrgaoList } from './OrgaoList';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import OrgaoButton from './OrgaoButton';
 import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
 
@@ -25,7 +21,24 @@ const styles = theme => ({
 class OrgaoPage extends Component {
     constructor(props) {
         super(props);
+        this.state={
+            dataForm: []
+        }
     }    
+
+    componentDidMount() {
+        this.buscar();
+    }
+
+    buscar = () => {
+        this.setState({ loaded: true });
+
+        API.TipoPrestador.get("/orgao")
+        .then(orgaos => {
+            this.setState({ dataForm: orgaos, mainLoading: false })
+        }, (evt) => console.log(evt));
+    };
+    
 
     render() {
         const { classes } = this.props;
@@ -44,13 +57,18 @@ class OrgaoPage extends Component {
                             <h4>Orgãos</h4>
                             <div >
                                 <FuseAnimate animation="transition.slideLeftIn" delay={600}>
-                                    <OrgaoButton classes={classes} />
+                                    <OrgaoButton 
+                                    classes={classes}
+                                    onOrgaoAdicionado={this.buscar} />
                                 </ FuseAnimate>
                             </div>
                         </div>
                     }
                     content={
-                        <OrgaoList classes={classes} />
+                        <OrgaoList 
+                        classes={classes}
+                        onOrgaoAdicionado={this.buscar}
+                        data={this.state.dataForm} />
                     }
                 />
             </div>
