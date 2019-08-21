@@ -1,18 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
-import { positions, Provider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
 
 import { OrgaoList } from './OrgaoList';
 
 import OrgaoButton from './OrgaoButton';
 import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
-
-const options = {
-    timeout: 5000,
-    position: positions.BOTTOM_CENTER
-  };
 
 const styles = theme => ({
     layoutRoot: {},
@@ -40,10 +33,24 @@ class OrgaoPage extends Component {
     buscar = () => {
         this.setState({ loaded: true });
 
-        API.TipoPrestador.get("/orgao")
-            .then(orgaos => {
-                this.setState({ dataForm: orgaos, mainLoading: false })
-            }, (evt) => console.log(evt));
+        console.log("Chegou aki");
+            let form = [{
+                "id": "1",
+                "nome": "Julianno",
+                "descricao": "Teste"
+                },
+                {
+                    "id": "2",
+                    "nome": "Marcondes",
+                    "descricao": "Aiste"
+                }]
+
+          
+                this.setState({ dataForm: form, mainLoading: false })
+        // API.TipoPrestador.get("/orgao")
+        //     .then(orgaos => {
+        //         this.setState({ dataForm: orgaos, mainLoading: false })
+        //     }, (evt) => console.log(evt));
     };
 
 

@@ -42,15 +42,15 @@ export class OrgaoList extends Component {
 
 
     render() {
-        const { classes, onOrgaoAdicionado, dataForm } = this.props;
-        onOrgaoAdicionado();
+        const { classes, data } = this.props;
 
-        let data = [];
+
+        let datas = [];
         let id = [];
 
-        data = Object.keys(dataForm).map((key) => {
+        datas = Object.keys(data).map((key) => {
             id.push(key);
-            return dataForm[key]
+            return data[key]
         });
 
 
@@ -61,7 +61,7 @@ export class OrgaoList extends Component {
                         {this.state.loaded}
                     </div>
                 </FuseAnimate>
-                <ReactTable data={data}
+                <ReactTable data={datas}
                     autoGenerateColumns={true}
                     defaultPageSize={10}
                     columns={[
