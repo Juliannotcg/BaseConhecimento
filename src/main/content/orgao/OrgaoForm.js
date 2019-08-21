@@ -34,7 +34,9 @@ export default class OrgaoForm extends React.Component {
                     })}
                     onSubmit={fields => {
                         registrar(fields);
-                        alert('SUCCESS!! :-)\n\n' + JSON.stringify(fields, null, 4))
+                        this.props.atualizar();
+
+                        console.log("Teste", this.props.atualizar());
                     }}
                     render={({ errors, status, touched }) => (
                         <Form>
@@ -81,11 +83,13 @@ export default class OrgaoForm extends React.Component {
 }
 
 function registrar(values) {
+
     API.BaseConhecimento.post('/Orgao', values).then((response) => {
         var objRetorno = {
             success: true,
             mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
         };
+        
 
         //props.onClose();
         // setStatus(objRetorno);

@@ -7,6 +7,7 @@ import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
 import Paper from "@material-ui/core/es/Paper/Paper";
 import axios from "axios";
 import OrgaoButton from './OrgaoButton';
+import API from '../../API/API';
 
 const styles = theme => ({
     layoutRoot: {}
@@ -24,7 +25,7 @@ export class OrgaoList extends Component {
 
     removeForm = (id) => {
         this.setState({ loaded: true });
-        axios.delete("https://valued-mediator-138113.firebaseio.com/forms/" + id + ".json")
+        axios.delete("https://localhost:44342/api/orgao?id=" + id)
             .then((res) => {
                 this.setState({ loaded: false });
                 this.getDate();
@@ -35,8 +36,6 @@ export class OrgaoList extends Component {
             })
     };
 
-
-
     componentDidMount() {
         this.getDate();
     }
@@ -44,33 +43,13 @@ export class OrgaoList extends Component {
     getDate = () => {
         this.setState({ loaded: true });
 
-        let data = [];
-
-        data = [{
-            "id": 1,
-            "nome": "Julianno",
-            "descricao": "Teste"
-        },
-        {
-            "id": 2,
-            "nome": "Neto",
-            "descricao": "Testes"
-        }];
-
-        this.setState({ forms: data, loaded: true });
-
-        // axios.get('https://localhost:44342/api/orgao')
-        //     .then((response)=>{
-        //         this.setState({forms: response.data, loaded: true});
-        //     }).catch((error)=>{
-        //     this.setState({loaded:true});
-        //         console.log(error);
-        // });
-
-        // API.TipoPrestador.post("/tipoprestador/busca", this.state.filtro)
-        // .then(tipoPrestadores => {
-        //     this.setState({ tipoPrestadores: tipoPrestadores, mainLoading: false })
-        // }, (evt) => this.mostrarMensagemErro({ mainLoading: false }, evt));
+        axios.get('https://localhost:44342/api/orgao')
+            .then((response)=>{
+                this.setState({forms: response.data, loaded: true});
+            }).catch((error)=>{
+            this.setState({loaded:true});
+                console.log(error);
+        });
     };
 
     render() {
@@ -83,6 +62,8 @@ export class OrgaoList extends Component {
             id.push(key);
             return this.state.forms[key]
         });
+
+
         return (
             <div>
                 <FuseAnimate animation="transition.slideLeftIn" delay={200}>
@@ -118,7 +99,7 @@ export class OrgaoList extends Component {
                                     <IconButton
                                         onClick={(ev) => {
                                             ev.stopPropagation();
-                                            this.removeForm(id[row.index]);
+                                            this.removeForm(row.original.id);
                                         }}>
                                         <Icon>delete</Icon>
                                     </IconButton>
