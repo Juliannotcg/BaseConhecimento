@@ -34,7 +34,6 @@ export default class OrgaoForm extends React.Component {
                     })}
                     onSubmit={fields => {
                         registrar(fields, onOrgaoAdicionado);
-                        console.log("Teste", this.props.atualizar());
                     }}
                     render={({ errors, status, touched }) => (
                         <Form>
