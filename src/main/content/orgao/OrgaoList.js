@@ -36,6 +36,10 @@ export class OrgaoList extends Component {
             })
     };
 
+    componentDidMount(){
+        this.props.onOrgaoAdicionado();
+    }
+
 
     render() {
         const { classes, onOrgaoAdicionado, dataForm } = this.props;
