@@ -1,11 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
 import { OrgaoList } from './OrgaoList';
 
 import OrgaoButton from './OrgaoButton';
 import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
 
+const options = {
+    timeout: 5000,
+    position: positions.BOTTOM_CENTER
+  };
 
 const styles = theme => ({
     layoutRoot: {},
@@ -21,10 +28,10 @@ const styles = theme => ({
 class OrgaoPage extends Component {
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             dataForm: []
         }
-    }    
+    }
 
     componentDidMount() {
         this.buscar();
@@ -34,43 +41,44 @@ class OrgaoPage extends Component {
         this.setState({ loaded: true });
 
         API.TipoPrestador.get("/orgao")
-        .then(orgaos => {
-            this.setState({ dataForm: orgaos, mainLoading: false })
-        }, (evt) => console.log(evt));
+            .then(orgaos => {
+                this.setState({ dataForm: orgaos, mainLoading: false })
+            }, (evt) => console.log(evt));
     };
-    
+
 
     render() {
         const { classes } = this.props;
 
         return (
             <div>
-                <FusePageSimple
-                    classes={{
-                        root: classes.layoutRoot
-                    }}
-                    header={
-                        <div className="p-24"><h4>Orgão</h4></div>
-                    }
-                    contentToolbar={
-                        <div>
-                            <h4>Orgãos</h4>
-                            <div >
-                                <FuseAnimate animation="transition.slideLeftIn" delay={600}>
-                                    <OrgaoButton 
-                                    classes={classes}
-                                    onOrgaoAdicionado={this.buscar} />
-                                </ FuseAnimate>
+               
+                    <FusePageSimple
+                        classes={{
+                            root: classes.layoutRoot
+                        }}
+                        header={
+                            <div className="p-24"><h4>Orgão</h4></div>
+                        }
+                        contentToolbar={
+                            <div>
+                                <h4>Orgãos</h4>
+                                <div >
+                                    <FuseAnimate animation="transition.slideLeftIn" delay={600}>
+                                        <OrgaoButton
+                                            classes={classes}
+                                            onOrgaoAdicionado={this.buscar} />
+                                    </ FuseAnimate>
+                                </div>
                             </div>
-                        </div>
-                    }
-                    content={
-                        <OrgaoList 
-                        classes={classes}
-                        onOrgaoAdicionado={this.buscar}
-                        data={this.state.dataForm} />
-                    }
-                />
+                        }
+                        content={
+                                <OrgaoList
+                                    classes={classes}
+                                    onOrgaoAdicionado={this.buscar}
+                                    data={this.state.dataForm} />
+                        }
+                    />
             </div>
         )
     }
