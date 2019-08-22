@@ -7,6 +7,18 @@ import API from '../../API/API';
 
 import OrgaoButton from './OrgaoButton';
 import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
+import {toastr} from 'react-redux-toastr'
+import {Provider}  from 'react-redux'
+import ReduxToastr from 'react-redux-toastr'
+import {createStore, combineReducers} from 'redux'
+import {reducer as toastrReducer} from 'react-redux-toastr'
+const reducers = {
+  // ... other reducers ...
+  toastr: toastrReducer // <- Mounted at toastr.
+}
+const reducer = combineReducers(reducers)
+const store = createStore(reducer)
+
 
 const styles = theme => ({
     layoutRoot: {},
@@ -34,11 +46,28 @@ class OrgaoPage extends Component {
     buscar = () => {
         this.setState({ loaded: true });
        
-        API.BaseConhecimento.get("/orgao")
-            .then(orgaos => {
-                this.setState({ dataForm: orgaos, mainLoading: false })
-            }, (evt) => console.log(evt));
+        let dadosForms = [{
+            "id": "1",
+            "nome": "Julianno",
+            "descricao": "Teste"
+        },
+        {
+            "id": "2",
+            "nome": "Marcondes",
+            "descricao": "Teste e Teste"
+        }]
+
+        this.setState({ dataForm: dadosForms, mainLoading: false })
+
+        // API.BaseConhecimento.get("/orgao")
+        //     .then(orgaos => {
+        //         this.setState({ dataForm: orgaos, mainLoading: false })
+        //     }, (evt) => console.log(evt));
     };
+
+    toastrs = () => {
+        toastr.success('The title', 'The message');
+    }
 
 
     render() {
@@ -46,6 +75,19 @@ class OrgaoPage extends Component {
 
         return (
             <div>
+                 <Provider store={store}>
+                        <div>
+                            <ReduxToastr
+                            timeOut={5000}
+                            newestOnTop={true}
+                            preventDuplicates
+                            position="top-left"
+                            transitionIn="fadeIn"
+                            transitionOut="fadeOut"
+                            progressBar
+                            closeOnToastrClick/>
+                        </div>
+                </Provider>
                
                     <FusePageSimple
                         classes={{
@@ -60,6 +102,7 @@ class OrgaoPage extends Component {
                                 <div >
                                     <FuseAnimate animation="transition.slideLeftIn" delay={600}>
                                         <OrgaoButton
+                                            toastrs={this.toastrs}
                                             classes={classes}
                                             onOrgaoAdicionado={this.buscar} />
                                     </ FuseAnimate>

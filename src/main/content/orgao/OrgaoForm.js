@@ -11,7 +11,7 @@ export default class OrgaoForm extends React.Component {
     }
 
     render() {
-        const{onClose, item, onOrgaoAdicionado} = this.props;
+        const{onClose, item, onOrgaoAdicionado, toastrs} = this.props;
         let obj = {
             nome: '',
             descricao: ''
@@ -72,7 +72,7 @@ export default class OrgaoForm extends React.Component {
                                 <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group">
-                                <Button type="submit" >Register</Button>
+                                <Button type="submit" onClick={toastrs}>Register</Button>
                                 <Button 
                                 type="reset"
                                 className="btn btn-secondary"
@@ -87,15 +87,15 @@ export default class OrgaoForm extends React.Component {
 
 function registrar(values, onOrgaoAdicionado, onClose) {
 
-    API.BaseConhecimento.post('/Orgao', values).then((response) => {
-        var objRetorno = {
-            success: true,
-            mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
-        };
+    // API.BaseConhecimento.post('/Orgao', values).then((response) => {
+    //     var objRetorno = {
+    //         success: true,
+    //         mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
+    //     };
    
-    }, reject => {
-        console.log(reject);
-    });
+    // }, reject => {
+    //     console.log(reject);
+    // });
     onOrgaoAdicionado();
     onClose();
     window.scrollTo(0, 0);
