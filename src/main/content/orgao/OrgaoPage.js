@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { FusePageSimple, DemoContent } from '@fuse';
 
 import { OrgaoList } from './OrgaoList';
+import API from '../../API/API';
 
 import OrgaoButton from './OrgaoButton';
 import FuseAnimate from "../../../@fuse/components/FuseAnimate/FuseAnimate";
@@ -32,25 +33,11 @@ class OrgaoPage extends Component {
 
     buscar = () => {
         this.setState({ loaded: true });
-
-        console.log("Chegou aki");
-            let form = [{
-                "id": "1",
-                "nome": "Julianno",
-                "descricao": "Teste"
-                },
-                {
-                    "id": "2",
-                    "nome": "Marcondes",
-                    "descricao": "Aiste"
-                }]
-
-          
-                this.setState({ dataForm: form, mainLoading: false })
-        // API.TipoPrestador.get("/orgao")
-        //     .then(orgaos => {
-        //         this.setState({ dataForm: orgaos, mainLoading: false })
-        //     }, (evt) => console.log(evt));
+       
+        API.BaseConhecimento.get("/orgao")
+            .then(orgaos => {
+                this.setState({ dataForm: orgaos, mainLoading: false })
+            }, (evt) => console.log(evt));
     };
 
 

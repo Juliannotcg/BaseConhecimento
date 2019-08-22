@@ -33,7 +33,13 @@ export default class OrgaoForm extends React.Component {
                             .required('O campo descrição é obrigatório.')
                     })}
                     onSubmit={fields => {
-                        registrar(fields, onOrgaoAdicionado, onClose);
+
+                        if (!this.props.isEdicao) {
+                            registrar(fields, onOrgaoAdicionado, onClose, this.props.item);
+                        }else{
+                            alterar(fields, onOrgaoAdicionado, onClose, this.props.item);
+                        }
+                        
                     }}
                     render={({ errors, status, touched }) => (
                         <Form>
@@ -81,21 +87,36 @@ export default class OrgaoForm extends React.Component {
 
 function registrar(values, onOrgaoAdicionado, onClose) {
 
-    // API.BaseConhecimento.post('/Orgao', values).then((response) => {
-    //     var objRetorno = {
-    //         success: true,
-    //         mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
-    //     };
-       
-    // }, reject => {
-    //     console.log(reject);
-    // });
-
-
+    API.BaseConhecimento.post('/Orgao', values).then((response) => {
+        var objRetorno = {
+            success: true,
+            mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
+        };
+   
+    }, reject => {
+        console.log(reject);
+    });
     onOrgaoAdicionado();
     onClose();
-
     window.scrollTo(0, 0);
 }
 
 
+function alterar(values, onOrgaoAdicionado, onClose, item) {
+
+    item.nome = values.nome;
+    item.descricao = values.descricao;
+    console.log("Alterar", item)
+    API.BaseConhecimento.put('/Orgao', item).then((response) => {
+        var objRetorno = {
+            success: true,
+            mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
+        };
+        onOrgaoAdicionado();
+        onClose();
+    }, reject => {
+        console.log(reject);
+    });
+    onClose();
+    window.scrollTo(0, 0);
+}

@@ -2,10 +2,7 @@
 const lookUp = {};
 const lerComoJson = respostaHttp => respostaHttp.json();
 const interpretarResposta = json => {
-    if (json.success) {
-        return json.data;
-    }
-    return Promise.reject(json.errors);
+        return json;
 }
 
 const urlBase = "https://localhost:44342/api";
@@ -48,8 +45,8 @@ class API {
 
         static get(resource) {
             return fetch(urlBase + resource)
-                .then(lerComoJson)
-                .then(interpretarResposta)
+            .then(lerComoJson)
+            .then(interpretarResposta)
         }
     }
 }

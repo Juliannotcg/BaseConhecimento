@@ -25,25 +25,20 @@ export class OrgaoList extends Component {
 
     removeForm = (id) => {
         this.setState({ loaded: true });
-        axios.delete("https://localhost:44342/api/orgao?id=" + id)
-            .then((res) => {
-                this.setState({ loaded: false });
-                this.getDate();
-            })
-            .catch((error) => {
-                this.setState({ loaded: false });
-                console.log(error)
-            })
+
+
+        API.BaseConhecimento.delete("/orgao?id=" + id)
+        .then(console.log("Deu certo"));
+
+
     };
 
     componentDidMount(){
         this.props.onOrgaoAdicionado();
     }
 
-
     render() {
         const { classes, data } = this.props;
-
 
         let datas = [];
         let id = [];
