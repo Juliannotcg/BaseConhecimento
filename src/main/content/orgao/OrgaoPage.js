@@ -66,9 +66,8 @@ class OrgaoPage extends Component {
     };
 
     toastrs = () => {
-        toastr.success('The title', 'The message');
+        toastr.success('Orgão', 'Orgão cadastrado com sucesso');
     }
-
 
     render() {
         const { classes } = this.props;
@@ -78,12 +77,12 @@ class OrgaoPage extends Component {
                  <Provider store={store}>
                         <div>
                             <ReduxToastr
-                            timeOut={5000}
+                            timeOut={8000}
                             newestOnTop={true}
                             preventDuplicates
-                            position="top-left"
-                            transitionIn="fadeIn"
-                            transitionOut="fadeOut"
+                            position="bottom-right"
+                            transitionIn="bounceInDown"
+                            transitionOut="bounceOutUp"
                             progressBar
                             closeOnToastrClick/>
                         </div>
