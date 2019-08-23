@@ -11,7 +11,7 @@ export default class OrgaoForm extends React.Component {
     }
 
     render() {
-        const{onClose, item, onOrgaoAdicionado, toastrs} = this.props;
+        const{onClose, item, onOrgaoAdicionado, onToastrs} = this.props;
         let obj = {
             nome: '',
             descricao: ''
@@ -35,11 +35,10 @@ export default class OrgaoForm extends React.Component {
                     onSubmit={fields => {
 
                         if (!this.props.isEdicao) {
-                            registrar(fields, onOrgaoAdicionado, onClose, this.props.item);
+                            registrar(fields, onOrgaoAdicionado, onClose, this.props.item, onToastrs);
                         }else{
-                            alterar(fields, onOrgaoAdicionado, onClose, this.props.item);
+                            alterar(fields, onOrgaoAdicionado, onClose, this.props.item, onToastrs);
                         }
-                        
                     }}
                     render={({ errors, status, touched }) => (
                         <Form>
@@ -72,7 +71,7 @@ export default class OrgaoForm extends React.Component {
                                 <ErrorMessage name="descricao" component="div" className="invalid-feedback" />
                             </div>
                             <div className="form-group">
-                                <Button type="submit" onClick={toastrs}>Register</Button>
+                                <Button type="submit">Register</Button>
                                 <Button 
                                 type="reset"
                                 className="btn btn-secondary"
@@ -85,38 +84,34 @@ export default class OrgaoForm extends React.Component {
     }
 }
 
-function registrar(values, onOrgaoAdicionado, onClose) {
+function registrar(values, onOrgaoAdicionado, onClose, item, onToastrs) {
 
-    // API.BaseConhecimento.post('/Orgao', values).then((response) => {
-    //     var objRetorno = {
-    //         success: true,
-    //         mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
-    //     };
-   
-    // }, reject => {
-    //     console.log(reject);
-    // });
-    onOrgaoAdicionado();
-    onClose();
+    API.BaseConhecimento.post('/Orgao', values)
+    .then((response) => {
+       onToastrs(`O orgão ${values.nome} foi cadastrado com sucesso.`, true);
+       onOrgaoAdicionado();
+       onClose();
+    }, reject => {
+        onToastrs(`Ocorreu um erro ${reject}.`, false);
+        onClose();
+    });
     window.scrollTo(0, 0);
 }
 
 
-function alterar(values, onOrgaoAdicionado, onClose, item) {
+function alterar(values, onOrgaoAdicionado, onClose, item, onToastrs) {
 
     item.nome = values.nome;
     item.descricao = values.descricao;
-    console.log("Alterar", item)
-    API.BaseConhecimento.put('/Orgao', item).then((response) => {
-        var objRetorno = {
-            success: true,
-            mensagemSucesso: "Dados bancários do prestador cadastrado com sucesso."
-        };
+    API.BaseConhecimento.put('/Orgao', item)
+    .then((response) => {
+        onToastrs(`O orgão ${values.nome} foi alterado com sucesso.`, true);
         onOrgaoAdicionado();
         onClose();
     }, reject => {
-        console.log(reject);
+        onToastrs(`Ocorreu um erro ${reject}.`, false);
+        onClose();
     });
-    onClose();
+
     window.scrollTo(0, 0);
 }

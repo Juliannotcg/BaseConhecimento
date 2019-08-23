@@ -19,7 +19,7 @@ export default class OrgaoModal extends Component {
 
     
     render() {
-        const { open, onClose, item, isEdicao, onOrgaoAdicionado, toastrs } = this.props;
+        const { open, onClose, item, isEdicao, onOrgaoAdicionado, onToastrs } = this.props;
 
         return (
             <div>
@@ -35,7 +35,7 @@ export default class OrgaoModal extends Component {
                         </DialogTitle>
                         <DialogContent>
                             <OrgaoForm 
-                                toastrs={toastrs}
+                                onToastrs={onToastrs}
                                 onClose={onClose}
                                 isEdicao={isEdicao}
                                 item={item}

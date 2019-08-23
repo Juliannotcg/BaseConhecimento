@@ -2,6 +2,7 @@
 const lookUp = {};
 const lerComoJson = respostaHttp => respostaHttp.json();
 const interpretarResposta = json => {
+    
         return json;
 }
 
@@ -18,8 +19,9 @@ class API {
                 method: "POST",
                 body: JSON.stringify(data)
             })
-                .then(lerComoJson)
-                .then(interpretarResposta);
+                .then((response) =>{
+                  return response;
+                });
         }
 
         static put(resource, data) {
@@ -30,17 +32,18 @@ class API {
                 },
                 method: "PUT",
                 body: JSON.stringify(data)
-            })
-                .then(lerComoJson)
-                .then(interpretarResposta);
+            }).then((response) =>{
+                return response;
+              });
         }
 
         static delete(resource) {
+
             return fetch(urlBase + resource, {
                 method: "DELETE"
-            })
-                .then(lerComoJson)
-                .then(interpretarResposta)
+            }).then((response) => {
+                return response
+            });
         }
 
         static get(resource) {

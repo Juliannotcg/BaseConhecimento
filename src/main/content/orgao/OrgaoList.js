@@ -24,11 +24,14 @@ export class OrgaoList extends Component {
     }
 
     removeForm = (id) => {
+
         this.setState({ loaded: true });
 
-
         API.BaseConhecimento.delete("/orgao?id=" + id)
-        .then(console.log("Deu certo"));
+        .then((response) => {
+            this.props.onOrgaoAdicionado();
+            console.log(response);
+        });
 
 
     };
@@ -38,7 +41,7 @@ export class OrgaoList extends Component {
     }
 
     render() {
-        const { classes, data } = this.props;
+        const { classes, data, onOrgaoAdicionado, onToastrs} = this.props;
 
         let datas = [];
         let id = [];
@@ -47,7 +50,6 @@ export class OrgaoList extends Component {
             id.push(key);
             return data[key]
         });
-
 
         return (
             <div>
@@ -80,7 +82,9 @@ export class OrgaoList extends Component {
                                     <OrgaoButton 
                                         classes={classes}
                                         item={row.original}
-                                        isEdicao={true} />
+                                        isEdicao={true}
+                                        onOrgaoAdicionado={onOrgaoAdicionado}
+                                        onToastrs={onToastrs} />
                                     <IconButton
                                         onClick={(ev) => {
                                             ev.stopPropagation();
