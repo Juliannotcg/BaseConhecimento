@@ -45,28 +45,20 @@ class OrgaoPage extends Component {
 
     buscar = () => {
         this.setState({ loaded: true });
-       
-        let dadosForms = [{
-            "id": "1",
-            "nome": "Julianno",
-            "descricao": "Teste"
-        },
-        {
-            "id": "2",
-            "nome": "Marcondes",
-            "descricao": "Teste e Teste"
-        }]
-
-        this.setState({ dataForm: dadosForms, mainLoading: false })
-
-        // API.BaseConhecimento.get("/orgao")
-        //     .then(orgaos => {
-        //         this.setState({ dataForm: orgaos, mainLoading: false })
-        //     }, (evt) => console.log(evt));
+        API.BaseConhecimento.get("/orgao")
+            .then(orgaos => {
+                this.setState({ dataForm: orgaos, mainLoading: false })
+            }, (evt) => console.log(evt));
     };
 
-    toastrs = () => {
-        toastr.success('Orgão', 'Orgão cadastrado com sucesso');
+    toastrs = (texto, sucesso) => {
+
+        if(sucesso)
+        {
+            toastr.success("Sucesso!", texto);
+        }else{
+            toastr.error("Erro!", texto );
+        }
     }
 
     render() {
@@ -77,7 +69,7 @@ class OrgaoPage extends Component {
                  <Provider store={store}>
                         <div>
                             <ReduxToastr
-                            timeOut={8000}
+                            timeOut={6000}
                             newestOnTop={true}
                             preventDuplicates
                             position="bottom-right"
@@ -101,7 +93,7 @@ class OrgaoPage extends Component {
                                 <div >
                                     <FuseAnimate animation="transition.slideLeftIn" delay={600}>
                                         <OrgaoButton
-                                            toastrs={this.toastrs}
+                                            onToastrs={this.toastrs}
                                             classes={classes}
                                             onOrgaoAdicionado={this.buscar} />
                                     </ FuseAnimate>
@@ -112,7 +104,8 @@ class OrgaoPage extends Component {
                                 <OrgaoList
                                     classes={classes}
                                     onOrgaoAdicionado={this.buscar}
-                                    data={this.state.dataForm} />
+                                    data={this.state.dataForm}
+                                    onToastrs={this.toastrs} />
                         }
                     />
             </div>
