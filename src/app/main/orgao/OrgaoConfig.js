@@ -8,11 +8,15 @@ export const OrgaoConfig = {
     routes  : [
         {
             path     : '/orgao',
-            component: React.lazy(() => import('./Orgaos'))
+            component: React.lazy(() => import('../orgao/Orgao'))
         },
         {
-            path     : '/orgao',
-            component: () => <Redirect to="/Orgaos"/>
+            path     : '/Orgaos',
+            component: React.lazy(() => import('../orgao/Orgaos'))
+        },
+        {
+            path     : '/',
+            component: () => <Redirect to="/orgao"/>
         }
     ]
 };

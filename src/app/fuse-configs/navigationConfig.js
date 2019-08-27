@@ -13,8 +13,8 @@ const navigationConfig = [
                 'url'  : '/example'
             },
             {
-                'id'   : 'example-component',
-                'title': 'Example',
+                'id'   : 'orgao-component',
+                'title': 'Orgão',
                 'type' : 'item',
                 'icon' : 'whatshot',
                 'url'  : '/orgao'

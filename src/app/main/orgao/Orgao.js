@@ -71,10 +71,11 @@ function Orgao(props)
 
     function canBeSubmitted()
     {
-        return (
-            form.nome.length > 0 &&
-            !_.isEqual(orgao.data, form)
-        );
+        console.log(form);
+        // return (
+        //     form.name.length > 0 &&
+        //     !_.isEqual(orgao.data, form)
+        // );
     }
 
     return (
@@ -90,7 +91,7 @@ function Orgao(props)
                         <div className="flex flex-col items-start max-w-full">
 
                             <FuseAnimate animation="transition.slideRightIn" delay={300}>
-                                <Typography className="normal-case flex items-center sm:mb-12" component={Link} role="button" to="/apps/e-commerce/products" color="inherit">
+                                <Typography className="normal-case flex items-center sm:mb-12" component={Link} role="button" to="/Orgaos" color="inherit">
                                     <Icon className="mr-4 text-20">arrow_back</Icon>
                                     Orgaos
                                 </Typography>
@@ -99,13 +100,13 @@ function Orgao(props)
                             <div className="flex items-center max-w-full">
                                 <FuseAnimate animation="transition.expandIn" delay={300}>
                                     {
-                                       <span>{form.nome}</span>
+                                       <span>{"Julianno"}</span>
                                     }
                                 </FuseAnimate>
                                 <div className="flex flex-col min-w-0">
                                     <FuseAnimate animation="transition.slideLeftIn" delay={300}>
                                         <Typography className="text-16 sm:text-20 truncate">
-                                            {form.nome ? form.nome : 'Novo Orgao'}
+                                            {'Novo Orgao'}
                                         </Typography>
                                     </FuseAnimate>
                                     <FuseAnimate animation="transition.slideLeftIn" delay={300}>
@@ -129,7 +130,7 @@ function Orgao(props)
             }
             contentToolbar={
                 <Tabs
-                    value={tabValue}
+                    //value={tabValue}
                     //onChange={handleChangeTab}
                     indicatorColor="secondary"
                     textColor="secondary"
@@ -147,18 +148,16 @@ function Orgao(props)
             content={
                 form && (
                     <div className="p-16 sm:p-24 max-w-2xl">
-                      
                             <div>
-
                                 <TextField
                                     className="mt-8 mb-16"
-                                    error={form.nome === ''}
+                                    error={form.name === ''}
                                     required
                                     label="Name"
                                     autoFocus
                                     id="name"
                                     name="name"
-                                    value={form.nome}
+                                    value={form.name}
                                     onChange={handleChange}
                                     variant="outlined"
                                     fullWidth
@@ -178,7 +177,7 @@ function Orgao(props)
                                     fullWidth
                                 />
 
-                                <FuseChipSelect
+                                {/* <FuseChipSelect
                                     className="mt-8 mb-24"
                                     value={
                                         form.categories.map(item => ({
@@ -196,7 +195,7 @@ function Orgao(props)
                                         variant        : 'outlined'
                                     }}
                                     isMulti
-                                />
+                                /> */}
                             </div>
                         )}
                     </div>
