@@ -129,21 +129,8 @@ function Orgao(props)
                 )
             }
             contentToolbar={
-                <Tabs
-                    //value={tabValue}
-                    //onChange={handleChangeTab}
-                    indicatorColor="secondary"
-                    textColor="secondary"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    classes={{root: "w-full h-64"}}
-                >
-                    <Tab className="h-64 normal-case" label="Basic Info"/>
-                    <Tab className="h-64 normal-case" label="Product Images"/>
-                    <Tab className="h-64 normal-case" label="Pricing"/>
-                    <Tab className="h-64 normal-case" label="Inventory"/>
-                    <Tab className="h-64 normal-case" label="Shipping"/>
-                </Tabs>
+                <h2>Cadastro de Orgãos</h2>
+        
             }
             content={
                 form && (
