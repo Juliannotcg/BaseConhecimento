@@ -20,7 +20,7 @@ function OrgaosHeader(props)
                     <Icon className="text-32 mr-0 sm:mr-12">shopping_basket</Icon>
                 </FuseAnimate>
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                    <Typography className="hidden sm:flex" variant="h6">Products</Typography>
+                    <Typography className="hidden sm:flex" variant="h6">Orgãos</Typography>
                 </FuseAnimate>
             </div>
 
@@ -30,7 +30,7 @@ function OrgaosHeader(props)
                     <FuseAnimate animation="transition.slideDownIn" delay={300}>
                         <Paper className="flex items-center w-full max-w-512 px-8 py-4 rounded-8" elevation={1}>
 
-                            <Icon className="mr-8" color="action">search</Icon>
+                            <Icon className="mr-8" color="action">pesquisar</Icon>
 
                             <Input
                                 placeholder="Search"

@@ -122,7 +122,7 @@ function ProductsTable(props)
                                         </TableCell>
 
                                         <TableCell className="truncate" component="th" scope="row">
-                                            {n.descricao.join(', ')}
+                                            {n.descricao}
                                         </TableCell>
 
                                         <TableCell component="th" scope="row" align="right">

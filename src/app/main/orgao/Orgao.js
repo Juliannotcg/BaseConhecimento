@@ -197,26 +197,6 @@ function Orgao(props)
                                     }}
                                     isMulti
                                 />
-
-                                <FuseChipSelect
-                                    className="mt-8 mb-16"
-                                    value={
-                                        form.tags.map(item => ({
-                                            value: item,
-                                            label: item
-                                        }))
-                                    }
-                                    onChange={(value) => handleChipChange(value, 'tags')}
-                                    placeholder="Select multiple tags"
-                                    textFieldProps={{
-                                        label          : 'Tags',
-                                        InputLabelProps: {
-                                            shrink: true
-                                        },
-                                        variant        : 'outlined'
-                                    }}
-                                    isMulti
-                                />
                             </div>
                         )}
                     </div>

@@ -9,12 +9,26 @@ export function getOrgao(params)
     const request = axios.get('https://localhost:44342/api/orgao', {params});
 
     return (dispatch) =>
-        request.then((response) =>
-            dispatch({
-                type   : GET_ORGAO,
-                payload: response.data
-            })
-        );
+        dispatch({
+            type   : GET_ORGAO,
+            payload: [{
+                        "id": "01",
+                        "nome": "Julianno",
+                        "descricao": "Teste"
+                     },
+                     {
+                        "id": "02",
+                        "nome": "Marcondes",
+                        "descricao": "Teste"
+                     }]
+        });
+
+        // request.then((response) =>
+        //     dispatch({
+        //         type   : GET_ORGAO,
+        //         payload: response.data
+        //     })
+        // );
 }
 
 export function saveOrgao(data)

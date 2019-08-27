@@ -8,14 +8,14 @@ const rows = [
         id            : 'nome',
         align         : 'left',
         disablePadding: false,
-        label         : 'Name',
+        label         : 'Nome',
         sort          : true
     },
     {
         id            : 'descricao',
         align         : 'left',
         disablePadding: false,
-        label         : 'Category',
+        label         : 'Descrição',
         sort          : true
     }
 ];

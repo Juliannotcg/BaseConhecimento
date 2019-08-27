@@ -5,15 +5,29 @@ export const SET_ORGAOS_SEARCH_TEXT = '[ORGAO APP] SET ORGAOS SEARCH TEXT';
 
 export function getOrgaos()
 {
-    const request = axios.get('https://localhost:44342/api/Orgao');
+    //const request = axios.get('https://localhost:44342/api/Orgao');
 
     return (dispatch) =>
-        request.then((response) =>
-            dispatch({
-                type   : GET_ORGAOS,
-                payload: response.data
-            })
-        );
+    dispatch({
+        type   : GET_ORGAOS,
+        payload: [{
+                    "id": "01",
+                    "nome": "Julianno",
+                    "descricao": "Teste"
+                 },
+                 {
+                    "id": "02",
+                    "nome": "Marcondes",
+                    "descricao": "Teste"
+                 }]
+    });
+
+        // request.then((response) =>
+        //     dispatch({
+        //         type   : GET_ORGAOS,
+        //         payload: response.data
+        //     })
+        // );
 }
 
 export function setOrgaosSearchText(event)
