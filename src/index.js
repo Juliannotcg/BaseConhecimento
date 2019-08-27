@@ -1,66 +1,24 @@
-import 'babel-polyfill'
-import 'typeface-roboto';
+// By default, this project supports all modern browsers.
+// Support for Internet Explorer 11 requires polyfills.
+// For to support Internet Explorer 11, install react-app-polyfill,
+// https://github.com/facebook/create-react-app/tree/master/packages/react-app-polyfill
+// import 'react-app-polyfill/ie11';
+// import 'react-app-polyfill/stable';
+import 'typeface-muli';
+import './react-table-defaults';
+import './react-chartjs-2-defaults';
+import './styles/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import history from './history';
-import './react-table-defaults';
-import './styles/index.css';
-import JssProvider from 'react-jss/lib/JssProvider';
-import {create} from 'jss';
-import {createGenerateClassName, jssPreset} from '@material-ui/core/styles';
-import registerServiceWorker from './registerServiceWorker';
-import {Provider} from 'react-redux';
-import {Router} from 'react-router-dom';
-import {routes} from './fuse-configs/fuseRoutesConfig';
-import {FuseLayout, FuseTheme, FuseAuthorization} from '@fuse';
-import MainToolbar from './main/MainToolbar';
-import MainNavbarContent from './main/MainNavbarContent';
-import MainNavbarHeader from './main/MainNavbarHeader';
-import MainFooter from './main/MainFooter';
-import jssExtend from 'jss-extend'
-import QuickPanel from 'main/quickPanel/QuickPanel';
-import FirebaseAuth from 'firebase-db/FirebaseAuth';
-import store from 'store';
-import SettingsPanel from 'main/SettingsPanel';
-
-const jss = create({
-    ...jssPreset(),
-    plugins: [...jssPreset().plugins, jssExtend()]
-});
-
-jss.options.insertionPoint = document.getElementById('jss-insertion-point');
-const generateClassName = createGenerateClassName();
+import * as serviceWorker from './serviceWorker';
+import App from 'app/App';
 
 ReactDOM.render(
-    <JssProvider jss={jss} generateClassName={generateClassName}>
-        <Provider store={store}>
-            <FirebaseAuth>
-                <Router history={history}>
-                    <FuseAuthorization routes={routes}>
-                        <FuseTheme>
-                            <FuseLayout
-                                routes={routes}
-                                toolbar={
-                                    <MainToolbar/>
-                                }
-                                navbarHeader={
-                                    <MainNavbarHeader/>
-                                }
-                                navbarContent={
-                                    <MainNavbarContent/>
-                                }
-                                footer={
-                                    <MainFooter/>
-                                }
-                            />
-                            <SettingsPanel/>
-                            <QuickPanel/>
-                        </FuseTheme>
-                    </FuseAuthorization>
-                </Router>
-            </FirebaseAuth>
-        </Provider>
-    </JssProvider>
-    , document.getElementById('root'));
+    <App/>,
+    document.getElementById('root')
+);
 
-registerServiceWorker();
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();

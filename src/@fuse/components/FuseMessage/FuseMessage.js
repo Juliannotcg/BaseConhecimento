@@ -1,58 +1,85 @@
-import React, {Component} from 'react';
-import {Snackbar, IconButton, withStyles, Icon} from '@material-ui/core';
-import * as Actions from 'store/actions';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import React from 'react';
+import {Snackbar, IconButton, Icon, SnackbarContent} from '@material-ui/core';
+import {green, amber, blue} from '@material-ui/core/colors';
+import {useDispatch, useSelector} from 'react-redux';
+import clsx from 'clsx';
+import * as Actions from 'app/store/actions';
+import {makeStyles} from '@material-ui/styles';
 
-const styles = theme => ({
-    root : {
-        position: 'absolute'
+const useStyles = makeStyles(theme => ({
+    root   : {},
+    success: {
+        backgroundColor: green[600],
+        color          : '#FFFFFF'
     },
-    close: {}
-});
+    error  : {
+        backgroundColor: theme.palette.error.dark,
+        color          : theme.palette.getContrastText(theme.palette.error.dark)
+    },
+    info   : {
+        backgroundColor: blue[600],
+        color          : '#FFFFFF'
+    },
+    warning: {
+        backgroundColor: amber[600],
+        color          : '#FFFFFF'
+    }
+}));
 
-class FuseMessage extends Component {
-    render()
-    {
-        const {classes} = this.props;
-        return (
-            <Snackbar
-                {...this.props.options}
-                open={this.props.state}
-                onClose={this.props.hideMessage}
-                classes={{
-                    root: classes.root
-                }}
+const variantIcon = {
+    success: "check_circle",
+    warning: "warning",
+    error  : "error_outline",
+    info   : "info"
+};
+
+function FuseMessage(props)
+{
+    const dispatch = useDispatch();
+    const state = useSelector(({fuse}) => fuse.message.state);
+    const options = useSelector(({fuse}) => fuse.message.options);
+
+    const classes = useStyles();
+
+    return (
+        <Snackbar
+            {...options}
+            open={state}
+            onClose={() => dispatch(Actions.hideMessage())}
+            classes={{
+                root: classes.root
+            }}
+            ContentProps={{
+                variant        : 'body2',
+                headlineMapping: {
+                    body1: 'div',
+                    body2: 'div'
+                }
+            }}
+        >
+            <SnackbarContent
+                className={clsx(classes[options.variant])}
+                message={
+                    <div className="flex items-center">
+                        {variantIcon[options.variant] && (
+                            <Icon className="mr-8" color="inherit">{variantIcon[options.variant]}</Icon>
+                        )}
+                        {options.message}
+                    </div>
+                }
                 action={[
                     <IconButton
                         key="close"
                         aria-label="Close"
                         color="inherit"
-                        className={classes.close}
-                        onClick={this.props.hideMessage}
+                        onClick={() => dispatch(Actions.hideMessage())}
                     >
                         <Icon>close</Icon>
                     </IconButton>
                 ]}
             />
-        );
-    }
+        </Snackbar>
+    );
 }
 
-function mapDispatchToProps(dispatch)
-{
-    return bindActionCreators({
-        hideMessage: Actions.hideMessage
-    }, dispatch);
-}
-
-function mapStateToProps({fuse})
-{
-    return {
-        state  : fuse.message.state,
-        options: fuse.message.options
-    }
-}
-
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(FuseMessage));
+export default React.memo(FuseMessage);

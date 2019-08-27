@@ -1,38 +1,43 @@
 import React from 'react';
+import {ListSubheader} from '@material-ui/core';
+import {makeStyles} from '@material-ui/styles';
+import {FuseUtils} from '@fuse';
+import {withRouter} from 'react-router-dom';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 import FuseNavVerticalCollapse from './FuseNavVerticalCollapse';
 import FuseNavVerticalItem from './FuseNavVerticalItem';
-import {ListSubheader} from '@material-ui/core';
-import {withRouter} from 'react-router-dom';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import FuseNavVerticalLink from './FuseNavVerticalLink';
 
-const propTypes = {
-    item: PropTypes.shape(
-        {
-            id      : PropTypes.string.isRequired,
-            title   : PropTypes.string,
-            children: PropTypes.array
-        })
-};
+const useStyles = makeStyles({
+    item: {
+        height      : 40,
+        width       : 'calc(100% - 16px)',
+        borderRadius: '0 20px 20px 0',
+        paddingRight: 12
+    }
+});
 
-const defaultProps = {};
-
-function FuseNavVerticalGroup({item, nestedLevel, userRole})
+function FuseNavVerticalGroup(props)
 {
-    if ( item.auth && (!item.auth.includes(userRole) || (userRole !== 'guest' && item.auth.length === 1 && item.auth.includes('guest'))) )
+    const userRole = useSelector(({auth}) => auth.user.role);
+
+    const classes = useStyles(props);
+    const {item, nestedLevel, active} = props;
+    let paddingValue = 40 + (nestedLevel * 16);
+    const listItemPadding = nestedLevel > 0 ? 'pl-' + (paddingValue > 80 ? 80 : paddingValue) : 'pl-24';
+
+    if ( !FuseUtils.hasPermission(item.auth, userRole) )
     {
         return null;
     }
 
-    let paddingValue = 40 + (nestedLevel * 16);
-    const listItemPadding = nestedLevel > 0 ? 'pl-' + (paddingValue > 80 ? 80 : paddingValue) : 'pl-24';
-
     return (
         <React.Fragment>
 
-            <ListSubheader disableSticky={true} className={classNames(listItemPadding, "list-subheader flex items-center")}>
-                <span className="list-subheader-text">
+            <ListSubheader disableSticky={true} className={clsx(classes.item, listItemPadding, "list-subheader flex items-center")}>
+                <span className="list-subheader-text uppercase text-12">
                     {item.title}
                 </span>
             </ListSubheader>
@@ -45,15 +50,19 @@ function FuseNavVerticalGroup({item, nestedLevel, userRole})
                             <React.Fragment key={item.id}>
 
                                 {item.type === 'group' && (
-                                    <NavVerticalGroup item={item} nestedLevel={nestedLevel}/>
+                                    <NavVerticalGroup item={item} nestedLevel={nestedLevel} active={active}/>
                                 )}
 
                                 {item.type === 'collapse' && (
-                                    <FuseNavVerticalCollapse item={item} nestedLevel={nestedLevel}/>
+                                    <FuseNavVerticalCollapse item={item} nestedLevel={nestedLevel} active={active}/>
                                 )}
 
                                 {item.type === 'item' && (
-                                    <FuseNavVerticalItem item={item} nestedLevel={nestedLevel}/>
+                                    <FuseNavVerticalItem item={item} nestedLevel={nestedLevel} active={active}/>
+                                )}
+
+                                {item.type === 'link' && (
+                                    <FuseNavVerticalLink item={item} nestedLevel={nestedLevel} active={active}/>
                                 )}
 
                             </React.Fragment>
@@ -65,16 +74,17 @@ function FuseNavVerticalGroup({item, nestedLevel, userRole})
     );
 }
 
-function mapStateToProps({auth})
-{
-    return {
-        userRole: auth.user.role
-    }
-}
+FuseNavVerticalGroup.propTypes = {
+    item: PropTypes.shape(
+        {
+            id      : PropTypes.string.isRequired,
+            title   : PropTypes.string,
+            children: PropTypes.array
+        })
+};
 
-FuseNavVerticalGroup.propTypes = propTypes;
-FuseNavVerticalGroup.defaultProps = defaultProps;
+FuseNavVerticalGroup.defaultProps = {};
 
-const NavVerticalGroup = withRouter(connect(mapStateToProps)(FuseNavVerticalGroup));
+const NavVerticalGroup = withRouter(React.memo(FuseNavVerticalGroup));
 
 export default NavVerticalGroup;

@@ -1,92 +1,99 @@
 import React, {Component} from 'react';
+import {FuseUtils} from '@fuse';
 import {matchRoutes} from 'react-router-config';
-import {bindActionCreators} from 'redux';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import _ from 'lodash';
-
-let redirect = false;
+import AppContext from 'app/AppContext';
 
 class FuseAuthorization extends Component {
 
-    constructor(props)
+    constructor(props, context)
     {
         super(props);
-        this.checkAuth();
+        const {routes} = context;
+        this.state = {
+            accessGranted: true,
+            routes
+        };
     }
 
-    componentDidUpdate(prevProps)
+    componentDidMount()
     {
-        /**
-         * If route is changed
-         * Update auths
-         */
-        if ( !_.isEqual(this.props.location.pathname, prevProps.location.pathname) )
+        if ( !this.state.accessGranted )
         {
-            this.checkAuth();
+            this.redirectRoute();
         }
     }
 
-    checkAuth()
+    componentDidUpdate()
     {
-        const matched = matchRoutes(this.props.routes, this.props.location.pathname)[0];
-        if ( matched && matched.route.auth && matched.route.auth.length > 0 )
+        if ( !this.state.accessGranted )
         {
-            if ( !matched.route.auth.includes(this.props.user.role) )
-            {
-                redirect = true;
-                if ( this.props.user.role === 'guest' )
-                {
-                    this.props.history.push({
-                        pathname: '/login',
-                        state   : {redirectUrl: this.props.location.pathname}
-                    });
-                }
-                else
-                {
-                    this.props.history.push({
-                        pathname: '/'
-                    });
-                }
-            }
+            this.redirectRoute();
         }
     }
 
-    shouldComponentUpdate(nextProps)
+    static getDerivedStateFromProps(props, state)
     {
-        if ( redirect )
-        {
-            redirect = false;
-            return false;
+        const {location, userRole} = props;
+        const {pathname} = location;
+
+        const matched = matchRoutes(state.routes, pathname)[0];
+
+        return {
+            accessGranted: matched ? FuseUtils.hasPermission(matched.route.auth, userRole) : true
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        return nextState.accessGranted !== this.state.accessGranted;
+    }
+
+    redirectRoute()
+    {
+        const {location, userRole, history} = this.props;
+        const {pathname, state} = location;
+        const redirectUrl = state && state.redirectUrl ? state.redirectUrl : '/';
+
+        /*
+        User is guest
+        Redirect to Login Page
+        */
+        if ( !userRole || userRole.length === 0 )
+        {
+            history.push({
+                pathname: '/login',
+                state   : {redirectUrl: pathname}
+            });
+        }
+        /*
+        User is member
+        User must be on unAuthorized page or just logged in
+        Redirect to dashboard or redirectUrl
+        */
         else
         {
-            return true;
+            history.push({
+                pathname: redirectUrl
+            });
         }
     }
 
     render()
     {
-        const {children} = this.props;
-
-        return (
-            <React.Fragment>
-                {children}
-            </React.Fragment>
-        );
+        // console.info('Fuse Authorization rendered', accessGranted);
+        return this.state.accessGranted ? <React.Fragment>{this.props.children}</React.Fragment> : null;
     }
 }
 
-function mapDispatchToProps(dispatch)
-{
-    return bindActionCreators({}, dispatch);
-}
-
-function mapStateToProps({fuse, auth})
+function mapStateToProps({auth})
 {
     return {
-        user: auth.user
+        userRole: auth.user.role
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FuseAuthorization));
+FuseAuthorization.contextType = AppContext;
+
+export default withRouter(connect(mapStateToProps)(FuseAuthorization));

@@ -1,5 +1,56 @@
 import * as colors from '@material-ui/core/colors';
-import _ from 'lodash';
+import _ from '@lodash';
+
+class EventEmitter {
+
+    constructor()
+    {
+        this.events = {};
+    }
+
+    _getEventListByName(eventName)
+    {
+        if ( typeof this.events[eventName] === 'undefined' )
+        {
+            this.events[eventName] = new Set();
+        }
+        return this.events[eventName]
+    }
+
+    on(eventName, fn)
+    {
+        this._getEventListByName(eventName).add(fn);
+    }
+
+    once(eventName, fn)
+    {
+
+        const self = this;
+
+        const onceFn = function (...args) {
+            self.removeListener(eventName, onceFn);
+            fn.apply(self, args);
+        };
+        this.on(eventName, onceFn);
+
+    }
+
+    emit(eventName, ...args)
+    {
+
+        this._getEventListByName(eventName).forEach(function (fn) {
+
+            fn.apply(this, args);
+
+        }.bind(this));
+
+    }
+
+    removeListener(eventName, fn)
+    {
+        this._getEventListByName(eventName).delete(fn);
+    }
+}
 
 class FuseUtils {
 
@@ -120,7 +171,7 @@ class FuseUtils {
         if ( config.settings || config.auth )
         {
             routes = routes.map((route) => {
-                let auth = config.auth ? [...config.auth] : [];
+                let auth = config.auth ? [...config.auth] : null;
                 auth = route.auth ? [...auth, ...route.auth] : auth;
                 return {
                     ...route,
@@ -184,7 +235,8 @@ class FuseUtils {
                     title: navItem.title,
                     type : navItem.type,
                     icon : navItem.icon || false,
-                    url  : navItem.url
+                    url  : navItem.url,
+                    auth : navItem.auth || null
                 });
 
                 continue;
@@ -241,6 +293,165 @@ class FuseUtils {
 
         return changes(object, base);
     }
+
+    static EventEmitter = EventEmitter;
+
+    static updateNavItem(nav, id, item)
+    {
+        return nav.map(_item => {
+
+            if ( _item.id === id )
+            {
+                return _.merge({}, _item, item);
+            }
+
+            if ( _item.children )
+            {
+                return _.merge({}, _item, {
+                    children: this.updateNavItem(_item.children, id, item)
+                });
+            }
+            else
+            {
+                return _.merge({}, _item);
+            }
+        })
+    }
+
+    static removeNavItem(nav, id)
+    {
+        return nav.map(_item => {
+            if ( _item.id === id )
+            {
+                return null;
+            }
+
+            if ( _item.children )
+            {
+                return _.merge({}, _.omit(_item, ['children']), {
+                    children: this.removeNavItem(_item.children, id)
+                });
+            }
+            else
+            {
+                return _.merge({}, _item);
+            }
+        }).filter(s => s)
+    }
+
+    static prependNavItem(nav, item, parentId)
+    {
+        if ( !parentId )
+        {
+            return [
+                item,
+                ...nav
+            ]
+        }
+
+        return nav.map(_item => {
+
+            if ( _item.id === parentId && _item.children )
+            {
+                return {
+                    _item,
+                    children: [
+                        item,
+                        ..._item.children
+                    ]
+                };
+            }
+
+            if ( _item.children )
+            {
+                return _.merge({}, _item, {
+                    children: this.prependNavItem(_item.children, item, parentId)
+                });
+            }
+            else
+            {
+                return _.merge({}, _item);
+            }
+        })
+    }
+
+    static appendNavItem(nav, item, parentId)
+    {
+        if ( !parentId )
+        {
+            return [
+                ...nav,
+                item
+            ]
+        }
+
+        return nav.map(_item => {
+
+            if ( _item.id === parentId && _item.children )
+            {
+                return {
+                    _item,
+                    children: [
+                        ..._item.children,
+                        item
+                    ]
+                };
+            }
+
+            if ( _item.children )
+            {
+                return _.merge({}, _item, {
+                    children: this.appendNavItem(_item.children, item, parentId)
+                });
+            }
+            else
+            {
+                return _.merge({}, _item);
+            }
+        })
+    }
+
+    static hasPermission(authArr, userRole)
+    {
+        /**
+         * If auth array is not defined
+         * Pass and allow
+         */
+        if ( authArr === null || authArr === undefined )
+        {
+            // console.info("auth is null || undefined:", authArr);
+            return true;
+        }
+        /**
+         * if auth array is empty means,
+         * allow only user role is guest (null or empty[])
+         */
+        else if ( authArr.length === 0 )
+        {
+            // console.info("auth is empty[]:", authArr);
+            return !userRole || userRole.length === 0;
+        }
+        /**
+         * Check if user has grants
+         */
+        else
+        {
+            // console.info("auth arr:", authArr);
+            /*
+            Check if user role is array,
+            */
+            if ( userRole && Array.isArray(userRole) )
+            {
+                return authArr.some(r => userRole.indexOf(r) >= 0);
+            }
+
+            /*
+            Check if user role is string,
+            */
+            return authArr.includes(userRole);
+        }
+    }
+
 }
 
 export default FuseUtils;

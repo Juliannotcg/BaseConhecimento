@@ -1,11 +1,12 @@
 import React from 'react';
 
-const DemoContent = () => {
+function DemoContent()
+{
     return (
         <div>
 
             <img
-                src="assets/images/beach.jpg"
+                src="assets/images/demo-content/morain-lake.jpg"
                 alt="beach"
                 style={{
                     maxWidth: '640px',
@@ -130,6 +131,6 @@ const DemoContent = () => {
             </p>
         </div>
     );
-};
+}
 
-export default DemoContent;
+export default React.memo(DemoContent);

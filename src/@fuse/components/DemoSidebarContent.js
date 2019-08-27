@@ -1,6 +1,6 @@
 import React from 'react';
 import {List, ListItem, ListItemText} from '@material-ui/core';
-import _ from 'lodash';
+import _ from '@lodash';
 
 function DemoSidebarContent()
 {
@@ -28,4 +28,4 @@ function DemoSidebarContent()
     );
 }
 
-export default DemoSidebarContent;
+export default React.memo(DemoSidebarContent);

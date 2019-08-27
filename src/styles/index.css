@@ -1,13 +1,12 @@
 @import 'normalize.css';
 
-
 * {
     outline: none !important;
 }
 
 html {
     font-size: 62.5%;
-    font-family: Roboto, Helvetica Neue, Arial, sans-serif;
+    font-family: Muli, Roboto, Helvetica Neue, Arial, sans-serif;
     background-color: #262933;
 }
 
@@ -56,7 +55,35 @@ a[role=button] {
     text-decoration: none;
 }
 
+/* Medium Devices, Desktops Only */
+@media only screen and (min-width: 992px) {
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+        background-color: rgba(0, 0, 0, 0);
+    }
 
+    ::-webkit-scrollbar:hover {
+        width: 12px;
+        height: 12px;
+        background-color: rgba(0, 0, 0, 0.06);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border: 2px solid transparent;
+        box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.24);
+        border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-thumb:active {
+        box-shadow: inset 0 0 0 20px rgba(0, 0, 0, 0.37);
+        border-radius: 20px;
+    }
+}
+
+form label {
+    z-index: 99;
+}
 
 @import 'print.css';
 
@@ -66,34 +93,4 @@ a[role=button] {
 
 @import 'prism.css';
 
-@import 'fuse-helpers.css';
-
-.cardHeader {
-    background-color: #3C4252
-
-}
-.cardTitle {
-    color: white;
-}
-.text-lighter {
-    color: #ccc;
-}
-.loading {
-    position: relative;
-}
-.loading:before {
-    content: "";
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("loading.gif");
-    display: block;
-    position: absolute;
-    background-position: center center;
-    -webkit-background-size: 60px 60px;
-    background-size: 50px 50px;
-    background-color: rgba(255,255,255,.7);
-    z-index: 100;
-    background-repeat: no-repeat;
-}
+@import 'tailwind.css';
