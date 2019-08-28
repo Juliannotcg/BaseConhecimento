@@ -4,12 +4,10 @@ import {ThemeProvider} from '@material-ui/styles';
 import {FuseAnimate} from '@fuse';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
-import * as Actions from '../orgao/store/actions';
 
-function OrgaosHeader(props)
+function OrgaoHeader(props)
 {
     const dispatch = useDispatch();
-    const searchText = useSelector(({orgaoApp}) => orgaoApp.orgaos.searchText);
     const mainTheme = useSelector(({fuse}) => fuse.settings.mainTheme);
 
     return (
@@ -20,7 +18,7 @@ function OrgaosHeader(props)
                     <Icon className="text-32 mr-0 sm:mr-12">shopping_basket</Icon>
                 </FuseAnimate>
                 <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                    <Typography className="hidden sm:flex" variant="h6">Orgãos</Typography>
+                    <Typography className="hidden sm:flex" variant="h6">Products</Typography>
                 </FuseAnimate>
             </div>
 
@@ -30,18 +28,16 @@ function OrgaosHeader(props)
                     <FuseAnimate animation="transition.slideDownIn" delay={300}>
                         <Paper className="flex items-center w-full max-w-512 px-8 py-4 rounded-8" elevation={1}>
 
-                            <Icon className="mr-8" color="action">pesquisar</Icon>
+                            <Icon className="mr-8" color="action">search</Icon>
 
                             <Input
                                 placeholder="Search"
                                 className="flex flex-1"
                                 disableUnderline
                                 fullWidth
-                                value={searchText}
                                 inputProps={{
                                     'aria-label': 'Search'
                                 }}
-                                onChange={ev => dispatch(Actions.setOrgaosSearchText(ev))}
                             />
                         </Paper>
                     </FuseAnimate>
@@ -49,8 +45,8 @@ function OrgaosHeader(props)
 
             </div>
             <FuseAnimate animation="transition.slideRightIn" delay={300}>
-                <Button component={Link} to="/orgao/new" className="whitespace-no-wrap" variant="contained">
-                    <span className="hidden sm:flex">Add Novo Orgão</span>
+                <Button component={Link} to="/apps/e-commerce/products/new" className="whitespace-no-wrap" variant="contained">
+                    <span className="hidden sm:flex">Add New Product</span>
                     <span className="flex sm:hidden">New</span>
                 </Button>
             </FuseAnimate>
@@ -58,4 +54,4 @@ function OrgaosHeader(props)
     );
 }
 
-export default OrgaosHeader;
+export default OrgaoHeader;

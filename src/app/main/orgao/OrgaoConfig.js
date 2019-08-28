@@ -1,22 +1,36 @@
-import React from 'react';
-import {Redirect} from 'react-router-dom';
+import Orgao from './Orgao';
 
 export const OrgaoConfig = {
     settings: {
-        layout: {}
+        layout: {
+            config: {}
+        }
     },
     routes  : [
         {
             path     : '/orgao',
-            component: React.lazy(() => import('../orgao/Orgao'))
-        },
-        {
-            path     : '/Orgaos',
-            component: React.lazy(() => import('../orgao/Orgaos'))
-        },
-        {
-            path     : '/',
-            component: () => <Redirect to="/orgao"/>
+            component: Orgao
         }
     ]
 };
+
+/**
+ * Lazy load Example
+ */
+/*
+import React from 'react';
+
+export const ExampleConfig = {
+    settings: {
+        layout: {
+            config: {}
+        }
+    },
+    routes  : [
+        {
+            path     : '/example',
+            component: React.lazy(() => import('./Example'))
+        }
+    ]
+};
+*/
