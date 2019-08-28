@@ -16,7 +16,7 @@ const navigationConfig = [
                 'id'   : 'orgao-component',
                 'title': 'Orgão',
                 'type' : 'item',
-                'icon' : 'whatshot',
+                'icon' : 'location_city',
                 'url'  : '/orgao'
             }
         ]
