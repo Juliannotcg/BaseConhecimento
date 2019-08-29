@@ -1,14 +1,28 @@
-import React, {useEffect, useState} from 'react';
-import {Avatar, Checkbox, Icon, IconButton, Typography} from '@material-ui/core';
-import {FuseUtils, FuseAnimate} from '@fuse';
+import React, { useEffect, useState } from 'react';
+import { Avatar, Checkbox, Icon, IconButton, Typography } from '@material-ui/core';
+import { FuseUtils, FuseAnimate } from '@fuse';
 import ReactTable from "react-table";
+import OrgaoDialog from './OrgaoDialog';
 
-function OrgaosList(props)
-{
+function OrgaosList(props) {
 
     const [filteredData, setFilteredData] = useState(null);
-    const {openDialog, handlerEdicao} = props;
-    
+
+    const [abrir, setAbrir] = useState(false);
+    const [rows, setRows] = useState();
+    const [isEdicao, setIsEdicao] = useState();
+
+    const edit = (event) =>{
+        setIsEdicao(event);
+    }
+
+    const openDialog = (event) =>{
+        setAbrir(event);
+    }
+
+    const rowEdit = (row) =>{
+        setRows(row);
+    }
 
     useEffect(() => {
         const data = [{
@@ -31,18 +45,16 @@ function OrgaosList(props)
             "nome": "Anderson",
             "descricao": "Teste"
         }]
-        
+
         setFilteredData(data);
-      }, []);
+    }, []);
 
 
-    if ( !filteredData )
-    {
+    if (!filteredData) {
         return null;
     }
 
-    if ( filteredData.length === 0 )
-    {
+    if (filteredData.length === 0) {
         return (
             <div className="flex flex-1 items-center justify-center h-full">
                 <Typography color="textSecondary" variant="h5">
@@ -53,56 +65,63 @@ function OrgaosList(props)
     }
 
     return (
-        <FuseAnimate animation="transition.slideUpIn" delay={300}>
-            <ReactTable
-                className="-striped -highlight h-full sm:rounded-16 overflow-hidden"
-                getTrProps={(state, rowInfo, column) => {
-                    return {
-                        className: "cursor-pointer",
-                    }
-                }}
-                data={filteredData}
-                columns={[
-                    {
-                        Header    : "Nome",
-                        accessor  : "nome",
-                        filterable: true,
-                        className : "font-bold"
-                    },
-                    {
-                        Header    : "Descrção",
-                        accessor  : "descricao",
-                        filterable: true,
-                        className : "font-bold"
-                    },
-                    {
-                        Header: "",
-                        width : 128,
-                        Cell  : row => (
-                            <div className="flex items-center">
-                                <IconButton
-                                   onClick={(ev) => {
-                                    ev.stopPropagation();
-                                    handlerEdicao(true);
-                                    openDialog(true);
-                                }}
-                                >
+        <React.Fragment>
+            <FuseAnimate animation="transition.slideUpIn" delay={300}>
+                <ReactTable
+                    className="-striped -highlight h-full sm:rounded-16 overflow-hidden"
+                    getTrProps={(state, rowInfo, column) => {
+                        return {
+                            className: "cursor-pointer",
+                        }
+                    }}
+                    data={filteredData}
+                    columns={[
+                        {
+                            Header: "Nome",
+                            accessor: "nome",
+                            filterable: true,
+                            className: "font-bold"
+                        },
+                        {
+                            Header: "Descrção",
+                            accessor: "descricao",
+                            filterable: true,
+                            className: "font-bold"
+                        },
+                        {
+                            Header: "",
+                            width: 128,
+                            Cell: row => (
+                                <div className="flex items-center">
+                                    <IconButton
+                                        onClick={(ev) => {
+                                            openDialog(true);
+                                            rowEdit(row);
+                                            edit(true);
+                                        }}
+                                    >
                                         <Icon>edit</Icon>
-                                    
-                                </IconButton>
-                                <IconButton
-                                   
-                                >
-                                    <Icon>delete</Icon>
-                                </IconButton>
-                            </div>
-                        )
-                    }
-                ]}
-                defaultPageSize={10}
-                noDataText="No contacts found"
-            />
-        </FuseAnimate>
+
+                                    </IconButton>
+                                    <IconButton
+
+                                    >
+                                        <Icon>delete</Icon>
+                                    </IconButton>
+                                </div>
+                            )
+                        }
+                    ]}
+                    defaultPageSize={10}
+                    noDataText="No contacts found"
+                />
+            </FuseAnimate>
+            <OrgaoDialog 
+            abrir={abrir}
+            openDialog={openDialog}
+            rows={rows}
+            isEdicao={isEdicao}/>
+        </React.Fragment>
     );
 }
 

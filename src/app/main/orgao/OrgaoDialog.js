@@ -1,28 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, IconButton, Typography, Toolbar, AppBar, Avatar } from '@material-ui/core';
+import If from '../utils/If';
 
 function OrgaoDialog(props) {
 
     const [open, setOpen] = useState(false);
-    const {abrir, isEdicao, handlerEdicao} = props;
+    const [form, setForm] = useState(null);
+    const {abrir, openDialog, rows, isEdicao} = props;
+
+    console.log(rows);
 
     const handleClose = () => {
-        handlerEdicao(false);
         setOpen(false);
-    };
-
-    const handleOpen = () => {
-        setOpen(true);
+        openDialog(false);
     };
 
     useEffect(() => {
-       if(abrir || isEdicao) {
-          handleOpen();
-       }else{
-          handleClose();
-       }
+        if(abrir){
+            setOpen(true);
+        }
+    }, [props]);
 
-     }, [props]);
+    if(isEdicao){
+        const data = {
+            "nome": rows.original.nome,
+            "descricao": rows.original.descricao
+        }
+
+        setForm(data);
+    }
 
     return (
         <Dialog
@@ -37,7 +43,9 @@ function OrgaoDialog(props) {
             <AppBar position="static" elevation={1}>
                 <Toolbar className="flex w-full">
                     <Typography variant="subtitle1" color="inherit">
-                        {'Novo Orgão'}
+                        {
+                            isEdicao === true ? 'Editar Orgão' : 'Novo Orgão'
+                        }
                     </Typography>
                 </Toolbar>
 
@@ -51,6 +59,7 @@ function OrgaoDialog(props) {
                         <TextField
                             className="mb-24"
                             label="Nome"
+                            value = {rows.original.nome}
                             id="company"
                             name="company"
                             variant="outlined"

@@ -34,10 +34,7 @@ function Orgao() {
                 }
                 innerScroll
             />
-            <OrgaoDialog 
-                handlerEdicao={handlerEdicao}
-                abrir={abrir}
-                isEdicao={isEdicao}/>
+        
         </React.Fragment>
     );
 }
