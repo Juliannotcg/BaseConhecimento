@@ -10,7 +10,6 @@ function OrgaoHeader(props)
     const mainTheme = useSelector(({fuse}) => fuse.settings.mainTheme);
     const {openDialog} = props;
 
-
     return (
         <div className="flex flex-1 w-full items-center justify-between">
 

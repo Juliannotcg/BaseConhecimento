@@ -3,13 +3,13 @@ import { FusePageCarded } from '@fuse';
 import OrgaoHeader from './OrgaoHeader';
 import OrgaoDialog from './OrgaoDialog';
 
-function Orgao(props) {
+function Orgao() {
 
-    const [abrir, setAbrir] = useState();
-
+    const [abrir, setAbrir] = useState(false);
+    
     useEffect(() => {
-        setAbrir(false)
-     }, []);
+        setAbrir(false);
+      }, []);
 
     function openDialog(event){
         setAbrir(event);

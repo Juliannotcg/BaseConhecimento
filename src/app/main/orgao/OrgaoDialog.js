@@ -3,7 +3,7 @@ import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, IconButt
 
 function OrgaoDialog(props) {
 
-    const [open, setOpen] = useState();
+    const [open, setOpen] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
@@ -14,10 +14,11 @@ function OrgaoDialog(props) {
     };
 
     useEffect(() => {
-       if(props){
-        handleOpen();
+
+       if(props.abrir){
+          handleOpen();
        }else{
-        handleClose();
+          handleClose();
        }
      }, [props]);
 
