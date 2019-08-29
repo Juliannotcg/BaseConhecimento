@@ -2,6 +2,7 @@ import React,  {useState, useEffect} from 'react';
 import { FusePageCarded } from '@fuse';
 import OrgaoHeader from './OrgaoHeader';
 import OrgaoDialog from './OrgaoDialog';
+import OrgaosList from './OrgaosList';
 
 function Orgao() {
 
@@ -20,6 +21,9 @@ function Orgao() {
             <FusePageCarded
                 header={
                     <OrgaoHeader openDialog={openDialog}/>
+                }
+                content={
+                    <OrgaosList/>
                 }
                 innerScroll
             />
