@@ -1,39 +1,31 @@
-import React, { Component } from 'react';
+import React,  {useState, useEffect} from 'react';
 import { FusePageCarded } from '@fuse';
 import OrgaoHeader from './OrgaoHeader';
-import { openDialog } from 'app/store/actions';
 import OrgaoDialog from './OrgaoDialog';
 
-class Orgao extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          open: false
-        }
+function Orgao(props) {
+
+    const [abrir, setAbrir] = useState();
+
+    useEffect(() => {
+        setAbrir(false)
+     }, []);
+
+    function openDialog(event){
+        setAbrir(event);
     }
 
-    openDialog = (event) => {
-        this.setState({open: event});
-    }
-
-    render() {
-
-        return (
-            <React.Fragment>
-                <FusePageCarded
-                    header={
-                    <OrgaoHeader
-                     openDialog = {this.openDialog}/>
-                    }
-                    // contentToolbar={}
-                    // content={}
-                    innerScroll
-                />
-                <OrgaoDialog
-                open = {this.state.open}/>
-            </React.Fragment>
-        );
-    }
+    return (
+        <React.Fragment>
+            <FusePageCarded
+                header={
+                    <OrgaoHeader openDialog={openDialog}/>
+                }
+                innerScroll
+            />
+            <OrgaoDialog abrir={abrir}/>
+        </React.Fragment>
+    );
 }
 
 export default Orgao;
