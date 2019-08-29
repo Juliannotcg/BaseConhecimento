@@ -7,6 +7,8 @@ function OrgaosList(props)
 {
 
     const [filteredData, setFilteredData] = useState(null);
+    const {openDialog, handlerEdicao} = props;
+    
 
     useEffect(() => {
         const data = [{
@@ -16,7 +18,17 @@ function OrgaosList(props)
         },
         {
             "id": "02",
-            "nome": "Net0",
+            "nome": "Neto",
+            "descricao": "Teste"
+        },
+        {
+            "id": "03",
+            "nome": "Marcondes",
+            "descricao": "Teste"
+        },
+        {
+            "id": "04",
+            "nome": "Anderson",
             "descricao": "Teste"
         }]
         
@@ -69,10 +81,13 @@ function OrgaosList(props)
                         Cell  : row => (
                             <div className="flex items-center">
                                 <IconButton
-                                  
+                                   onClick={(ev) => {
+                                    ev.stopPropagation();
+                                    handlerEdicao(true);
+                                    openDialog(true);
+                                }}
                                 >
-                                 
-                                        <Icon>star</Icon>
+                                        <Icon>edit</Icon>
                                     
                                 </IconButton>
                                 <IconButton

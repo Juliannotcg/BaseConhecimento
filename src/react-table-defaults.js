@@ -7,10 +7,10 @@ import _ from '@lodash';
 const filterTypes = [
     {
         value: "contains",
-        title: "Contains"
+        title: "Contém"
     }, {
         value: "starts-with",
-        title: "Starts with"
+        title: "Primeira Letra"
     }, {
         value: "ends-with",
         title: "Ends with"

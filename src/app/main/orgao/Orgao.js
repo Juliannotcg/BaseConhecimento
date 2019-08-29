@@ -7,13 +7,18 @@ import OrgaosList from './OrgaosList';
 function Orgao() {
 
     const [abrir, setAbrir] = useState(false);
-    
+    const [isEdicao, setIsEdicao] = useState(false);
+
     useEffect(() => {
         setAbrir(false);
       }, []);
 
     function openDialog(event){
         setAbrir(event);
+    }
+
+    const handlerEdicao = (event) => {
+        setIsEdicao(event);
     }
 
     return (
@@ -23,11 +28,16 @@ function Orgao() {
                     <OrgaoHeader openDialog={openDialog}/>
                 }
                 content={
-                    <OrgaosList/>
+                    <OrgaosList 
+                    handlerEdicao={handlerEdicao} 
+                    openDialog={openDialog}/>
                 }
                 innerScroll
             />
-            <OrgaoDialog abrir={abrir}/>
+            <OrgaoDialog 
+                handlerEdicao={handlerEdicao}
+                abrir={abrir}
+                isEdicao={isEdicao}/>
         </React.Fragment>
     );
 }

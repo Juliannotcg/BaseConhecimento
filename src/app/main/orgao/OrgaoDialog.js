@@ -4,8 +4,10 @@ import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, IconButt
 function OrgaoDialog(props) {
 
     const [open, setOpen] = useState(false);
+    const {abrir, isEdicao, handlerEdicao} = props;
 
     const handleClose = () => {
+        handlerEdicao(false);
         setOpen(false);
     };
 
@@ -14,12 +16,12 @@ function OrgaoDialog(props) {
     };
 
     useEffect(() => {
-
-       if(props.abrir){
+       if(abrir || isEdicao) {
           handleOpen();
        }else{
           handleClose();
        }
+
      }, [props]);
 
     return (
