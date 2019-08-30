@@ -12,13 +12,8 @@ function OrgaoHeader(props) {
     const [abrir, setAbrir] = useState(false);
     const [isEdicao, setIsEdicao] = useState(false);
 
-    const edit = (event) => {
-        setIsEdicao(event);
-    }
-
-    const openDialog = (event) => {
-        setAbrir(event);
-    }
+    const { handlerEdicao, openDialog} = props;
+ 
 
     return (
         <React.Fragment>
@@ -54,7 +49,7 @@ function OrgaoHeader(props) {
                         onClick={(ev) => {
                             ev.stopPropagation();
                             openDialog(true);
-                            edit(false);
+                            handlerEdicao(false);
                         }}
                         component={Link}
                         className="whitespace-no-wrap"
@@ -64,10 +59,6 @@ function OrgaoHeader(props) {
                     </Button>
                 </FuseAnimate>
             </div>
-            <OrgaoDialog
-                    abrir={abrir}
-                    openDialog={openDialog}
-                    isEdicao={isEdicao} />
         </React.Fragment>
     );
 }

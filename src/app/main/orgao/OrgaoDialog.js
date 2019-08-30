@@ -17,6 +17,9 @@ function OrgaoDialog(props) {
 
     const {abrir, openDialog, rows, isEdicao} = props;
 
+
+    console.log(props);
+
     const handleClose = () => {
         setOpen(false);
         openDialog(false);

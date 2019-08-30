@@ -2,28 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Checkbox, Icon, IconButton, Typography } from '@material-ui/core';
 import { FuseUtils, FuseAnimate } from '@fuse';
 import ReactTable from "react-table";
-import OrgaoDialog from './OrgaoDialog';
-import If from '../utils/If';
+
 
 function OrgaosList(props) {
 
     const [filteredData, setFilteredData] = useState(null);
+    const { handlerEdicao, openDialog, valorRows} = props;
 
-    const [abrir, setAbrir] = useState(false);
-    const [rows, setRows] = useState();
-    const [isEdicao, setIsEdicao] = useState(false);
-
-    const edit = (event) =>{
-        setIsEdicao(event);
-    }
-
-    const openDialog = (event) =>{
-        setAbrir(event);
-    }
-
-    const rowEdit = (row) =>{
-        setRows(row);
-    }
 
     useEffect(() => {
         const data = [{
@@ -48,7 +33,6 @@ function OrgaosList(props) {
         }]
 
         setFilteredData(data);
-        setIsEdicao(false);
     }, []);
 
 
@@ -99,8 +83,8 @@ function OrgaosList(props) {
                                         onClick={(ev) => {
                                             ev.stopPropagation();
                                             openDialog(true);
-                                            rowEdit(row.original);
-                                            edit(true);
+                                            valorRows(row.original);
+                                            handlerEdicao(true);
                                         }}
                                     >
                                         <Icon>edit</Icon>
@@ -119,11 +103,7 @@ function OrgaosList(props) {
                     noDataText="No contacts found"
                 />
             </FuseAnimate>
-            <OrgaoDialog 
-                abrir={abrir}
-                openDialog={openDialog}
-                rows={rows}
-                isEdicao={isEdicao}/>
+    
         </React.Fragment>
     );
 }
