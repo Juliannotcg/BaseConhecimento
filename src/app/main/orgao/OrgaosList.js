@@ -3,6 +3,7 @@ import { Avatar, Checkbox, Icon, IconButton, Typography } from '@material-ui/cor
 import { FuseUtils, FuseAnimate } from '@fuse';
 import ReactTable from "react-table";
 import OrgaoDialog from './OrgaoDialog';
+import If from '../utils/If';
 
 function OrgaosList(props) {
 
@@ -10,7 +11,7 @@ function OrgaosList(props) {
 
     const [abrir, setAbrir] = useState(false);
     const [rows, setRows] = useState();
-    const [isEdicao, setIsEdicao] = useState();
+    const [isEdicao, setIsEdicao] = useState(false);
 
     const edit = (event) =>{
         setIsEdicao(event);
@@ -47,6 +48,7 @@ function OrgaosList(props) {
         }]
 
         setFilteredData(data);
+        setIsEdicao(false);
     }, []);
 
 
@@ -95,8 +97,9 @@ function OrgaosList(props) {
                                 <div className="flex items-center">
                                     <IconButton
                                         onClick={(ev) => {
+                                            ev.stopPropagation();
                                             openDialog(true);
-                                            rowEdit(row);
+                                            rowEdit(row.original);
                                             edit(true);
                                         }}
                                     >
@@ -117,10 +120,10 @@ function OrgaosList(props) {
                 />
             </FuseAnimate>
             <OrgaoDialog 
-            abrir={abrir}
-            openDialog={openDialog}
-            rows={rows}
-            isEdicao={isEdicao}/>
+                abrir={abrir}
+                openDialog={openDialog}
+                rows={rows}
+                isEdicao={isEdicao}/>
         </React.Fragment>
     );
 }

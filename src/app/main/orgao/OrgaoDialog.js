@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import {useForm} from '@fuse/hooks';
 import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, IconButton, Typography, Toolbar, AppBar, Avatar } from '@material-ui/core';
 import If from '../utils/If';
+
+
+const defaultFormState = {
+    id      : '',
+    nome    : '',
+    descricao: ''
+};
 
 function OrgaoDialog(props) {
 
     const [open, setOpen] = useState(false);
-    const [form, setForm] = useState(null);
-    const {abrir, openDialog, rows, isEdicao} = props;
+    const {form, handleChange, setForm} = useForm(defaultFormState);
 
-    console.log(rows);
+    const {abrir, openDialog, rows, isEdicao} = props;
 
     const handleClose = () => {
         setOpen(false);
@@ -19,16 +26,13 @@ function OrgaoDialog(props) {
         if(abrir){
             setOpen(true);
         }
-    }, [props]);
 
-    if(isEdicao){
-        const data = {
-            "nome": rows.original.nome,
-            "descricao": rows.original.descricao
+        if(isEdicao){
+            setForm(rows);
+        }else{
+            setForm(defaultFormState);
         }
-
-        setForm(data);
-    }
+    }, [props]);
 
     return (
         <Dialog
@@ -48,7 +52,6 @@ function OrgaoDialog(props) {
                         }
                     </Typography>
                 </Toolbar>
-
             </AppBar>
             <form noValidate className="flex flex-col overflow-hidden">
                 <DialogContent classes={{ root: "p-24" }}>
@@ -59,11 +62,13 @@ function OrgaoDialog(props) {
                         <TextField
                             className="mb-24"
                             label="Nome"
-                            value = {rows.original.nome}
-                            id="company"
-                            name="company"
+                            value={form.nome}
+                            onChange={handleChange}
+                            id="nome"
+                            name="nome"
                             variant="outlined"
                             fullWidth
+                            required
                         />
                     </div>
 
@@ -74,8 +79,10 @@ function OrgaoDialog(props) {
                         <TextField
                             className="mb-24"
                             label="Descrição"
-                            id="notes"
-                            name="notes"
+                            id="descricao"
+                            value={form.descricao}
+                            onChange={handleChange}
+                            name="descricao"
                             variant="outlined"
                             multiline
                             rows={5}
@@ -89,7 +96,6 @@ function OrgaoDialog(props) {
                         variant="contained"
                         color="primary"
                         type="submit"
-
                     >
                         Salvar
                         </Button>
