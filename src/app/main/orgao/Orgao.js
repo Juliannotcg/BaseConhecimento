@@ -26,6 +26,16 @@ function Orgao() {
         setRows(row);
     }
 
+    let renderDialog;
+    
+    if(abrir){
+        renderDialog = <OrgaoDialog 
+        abrir={abrir}
+        openDialog={openDialog}
+        rows={rows}
+        isEdicao={isEdicao}/>;
+    }
+
     return (
         <React.Fragment>
             <FusePageCarded
@@ -43,11 +53,7 @@ function Orgao() {
                 }
                 innerScroll
             />
-            <OrgaoDialog 
-                abrir={abrir}
-                openDialog={openDialog}
-                rows={rows}
-                isEdicao={isEdicao}/>
+           {renderDialog}
         </React.Fragment>
     );
 }
