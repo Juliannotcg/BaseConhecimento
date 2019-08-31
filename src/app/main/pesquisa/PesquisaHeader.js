@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { ThemeProvider } from '@material-ui/styles';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -17,21 +14,15 @@ import {
     Icon,
     TextField,
     Typography,
-    CardActions,
-    Divider,
     Select,
     InputLabel,
     FormControl,
     MenuItem,
-    LinearProgress,
     Input,
     Chip
 } from '@material-ui/core';
-import { FuseAnimate, FuseAnimateGroup } from '@fuse';
-import withReducer from 'app/store/withReducer';
+import { FuseAnimate } from '@fuse';
 import clsx from 'clsx';
-import _ from '@lodash';
-
 
 
 const useStyles = makeStyles(theme => ({

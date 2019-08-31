@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Typography } from '@material-ui/core';
 import {  FuseAnimate } from '@fuse';
 import ReactTable from "react-table";
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+    tabelaList: {
+        top: 150,
+        height: 450
+    },
+    }))
 
 function PesquisaList(props) {
 
     const [filteredData, setFilteredData] = useState(null);
+    const classes = useStyles(props);
 
     useEffect(() => {
         const data = [{
@@ -42,7 +50,7 @@ function PesquisaList(props) {
         <React.Fragment>
             <FuseAnimate animation="transition.slideUpIn" delay={300}>
                 <ReactTable
-                    className="-striped -highlight h-full sm:rounded-16 overflow-hidden"
+                    className={classes.tabelaList}
                     getTrProps={(state, rowInfo, column) => {
                         return {
                             className: "cursor-pointer",
@@ -53,43 +61,36 @@ function PesquisaList(props) {
                         {
                             Header: "Erro",
                             accessor: "erro",
-                            filterable: true,
                             className: "font-bold"
                         },
                         {
                             Header: "Solução",
                             accessor: "solucao",
-                            filterable: true,
                             className: "font-bold"
                         },
                         {
                             Header: "Descrição",
                             accessor: "descricao",
-                            filterable: true,
                             className: "font-bold"
                         },
                         {
                             Header: "Orgãos",
                             accessor: "orgaos",
-                            filterable: true,
                             className: "font-bold"
                         },
                         {
                             Header: "Equipamento/Software",
                             accessor: "equipamento",
-                            filterable: true,
                             className: "font-bold"
                         },                        
                         {
                             Header: "Técnico",
                             accessor: "tecnico",
-                            filterable: true,
                             className: "font-bold"
                         },                        
                         {
                             Header: "Data Criação",
                             accessor: "datacriacao",
-                            filterable: true,
                             className: "font-bold"
                         }
                     ]}
