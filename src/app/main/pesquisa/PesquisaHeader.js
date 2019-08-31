@@ -3,6 +3,12 @@ import { ThemeProvider } from '@material-ui/styles';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import {
     Button,
     Card,
@@ -43,11 +49,6 @@ const useStyles = makeStyles(theme => ({
         height: 412,
         pointerEvents: 'none'
     },
-    txtSearch: {
-        top: -64,
-        left: 10,
-        width: 200
-    },
     container: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -55,7 +56,12 @@ const useStyles = makeStyles(theme => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: 200,
+        width: 300,
+    },
+    textErroSolucao: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: 400,
     },
     dense: {
         marginTop: 19,
@@ -66,22 +72,22 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-      },
-      formControl: {
+    },
+    formControl: {
         margin: theme.spacing(1),
         minWidth: 250,
         maxWidth: 300,
-      },
-      chips: {
+    },
+    chips: {
         display: 'flex',
         flexWrap: 'wrap',
-      },
-      chip: {
+    },
+    chip: {
         margin: 2,
-      },
-      noLabel: {
+    },
+    noLabel: {
         marginTop: theme.spacing(3),
-      },
+    },
 }));
 
 const ITEM_HEIGHT = 48;
@@ -143,17 +149,31 @@ function PesquisaHeader(props) {
                             id="standard-with-placeholder"
                             label="Nome do erro"
                             placeholder="Erro"
-                            className={classes.textField}
+                            className={classes.textErroSolucao}
                             margin="normal"
+                            width="250px"
                         />
-                          <TextField
+                        <TextField
                             id="standard-with-placeholder"
                             label="Nome da solução"
                             placeholder="Solução"
-                            className={classes.textField}
+                            className={classes.textErroSolucao}
                             margin="normal"
                         />
-                
+
+                        <TextField
+                            id="standard-full-width"
+                            label="Descrição do erro"
+                            style={{ margin: 8 }}
+                            placeholder="Descreva o erro"
+                            helperText="No máximo 250 caracteres! "
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+
                         <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="select-multiple-chip">Orgãos</InputLabel>
                             <Select
@@ -178,49 +198,32 @@ function PesquisaHeader(props) {
                             </Select>
                         </FormControl>
                         <TextField
-                            id="standard-full-width"
-                            label="Label"
-                            style={{ margin: 8 }}
-                            placeholder="Placeholder"
-                            helperText="Full width!"
-                            fullWidth
-                            margin="normal"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-
-                        <TextField
-                            id="standard-helperText"
-                            label="Helper text"
-                            defaultValue="Default Value"
+                            id="standard-with-placeholder"
+                            label="Equipamento/Software"
+                            placeholder="Digite..."
                             className={classes.textField}
-                            helperText="Some important text"
                             margin="normal"
                         />
                         <TextField
                             id="standard-with-placeholder"
-                            label="With placeholder"
-                            placeholder="Placeholder"
+                            label="Técnico"
+                            placeholder="Digite..."
                             className={classes.textField}
                             margin="normal"
                         />
-                        <TextField
-                            id="standard-textarea"
-                            label="With placeholder multiline"
-                            placeholder="Placeholder"
-                            multiline
-                            className={classes.textField}
-                            margin="normal"
-                        />
-                        <TextField
-                            id="standard-search"
-                            label="Search field"
-                            type="search"
-                            className={classes.textField}
-                            margin="normal"
-                        />
-
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <KeyboardDatePicker
+                                disableToolbar
+                                variant="inline"
+                                format="dd/MM/yyyy"
+                                margin="normal"
+                                id="date-picker-inline"
+                                label="Data de criação da solução"
+                                KeyboardButtonProps={{
+                                    'aria-label': 'change date',
+                                }}
+                            />
+                        </MuiPickersUtilsProvider>
                     </form>
                 </div>
             </div>
