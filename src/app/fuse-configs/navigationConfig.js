@@ -6,6 +6,13 @@ const navigationConfig = [
         'icon'    : 'apps',
         'children': [
             {
+                'id'   : 'pesquisa-component',
+                'title': 'Pesquisa',
+                'type' : 'item',
+                'icon' : 'search',
+                'url'  : '/pesquisa'
+            },
+            {
                 'id'   : 'example-component',
                 'title': 'Example',
                 'type' : 'item',

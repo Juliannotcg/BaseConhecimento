@@ -1,16 +1,28 @@
-import React from 'react';
-import { FusePageCarded } from '@fuse';
+import React, {Component} from 'react';
+import {withStyles} from '@material-ui/core/styles';
+import {FusePageSimple} from '@fuse';
+import PesquisaHeader from './PesquisaHeader';
 
+const styles = theme => ({
+    layoutRoot: {}
+});
 
-function Pesquisa() {
+class Pesquisa extends Component {
 
-    return (
-        <React.Fragment>
-            <FusePageCarded/>
-        </React.Fragment>
-    );
+    render()
+    {
+        const {classes} = this.props;
+        return (
+            <FusePageSimple
+                classes={{
+                    root: classes.layoutRoot
+                }}
+                header={
+                   <PesquisaHeader />
+                }
+            />
+        )
+    }
 }
 
-export default Pesquisa;
-
-
+export default withStyles(styles, {withTheme: true})(Pesquisa);

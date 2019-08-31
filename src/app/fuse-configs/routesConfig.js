@@ -3,10 +3,13 @@ import {Redirect} from 'react-router-dom';
 import {FuseUtils} from '@fuse';
 import {ExampleConfig} from 'app/main/example/ExampleConfig';
 import { OrgaoConfig } from 'app/main/orgao/OrgaoConfig';
+import { PesquisaConfig } from 'app/main/pesquisa/PesquisaConfig';
 
 const routeConfigs = [
     ExampleConfig,
-    OrgaoConfig
+    OrgaoConfig,
+    PesquisaConfig
+
 ];
 
 const routes = [
