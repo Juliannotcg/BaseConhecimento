@@ -3,7 +3,6 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
-    KeyboardTimePicker,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import {

@@ -54,7 +54,7 @@ const navigationConfig = [
                 'title': 'Técnicos',
                 'type' : 'item',
                 'icon' : 'group',
-                'url'  : '/orgao'
+                'url'  : '/tecnico'
             }
         ]
     }
