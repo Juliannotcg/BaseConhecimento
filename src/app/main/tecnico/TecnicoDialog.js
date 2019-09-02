@@ -18,10 +18,6 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexWrap: 'wrap',
     },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 340,
-    },
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
@@ -120,14 +116,21 @@ function OrgaoDialog(props) {
                         <div className="min-w-48 pt-20">
                             <Icon color="action">location_city</Icon>
                         </div>
-                        <FormControl variant="outlined" className={classes.formControl}>
-                            <InputLabel htmlFor="outlined-age-simple">
+                        <FormControl 
+                         variant="outlined"
+                         className={classes.formControl} 
+                         fullWidth>
+                        <InputLabel
+                         htmlFor="outlined-age-simple"
+                         fullWidth>
                                 Orgão
                         </InputLabel>
                             <Select
                                 value={values.age}
                                 onChange={handleChangeSelect}
                                 input={<OutlinedInput labelWidth={labelWidth} name="age" id="outlined-age-simple" />}
+                                margin="normal"
+                                variant="outlined"
                             >
                                 <MenuItem value="">
                                     <em>Vazio</em>
@@ -140,7 +143,6 @@ function OrgaoDialog(props) {
                         </FormControl>
                     </div>
                 </DialogContent>
-
 
                 <DialogActions className="justify-between pl-16">
                     <Button

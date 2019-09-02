@@ -14,11 +14,8 @@ function OrgaoDialog(props) {
 
     const [open, setOpen] = useState(false);
     const {form, handleChange, setForm} = useForm(defaultFormState);
-
     const {abrir, openDialog, rows, isEdicao} = props;
 
-
-    console.log(props);
 
     const handleClose = () => {
         setOpen(false);
