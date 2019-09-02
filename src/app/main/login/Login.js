@@ -35,14 +35,14 @@ function Login()
 
                 <FuseAnimate animation="transition.slideUpIn" delay={300}>
                     <Typography variant="h3" color="inherit" className="font-light">
-                        Bem vindo a BASE DE CONHECIMENTO ConnectCom!
+                        Bem vindo a BASE DE CONHECIMENTO da ConnectCom!
                     </Typography>
                 </FuseAnimate>
 
                 <FuseAnimate delay={400}>
                     <Typography variant="subtitle1" color="inherit" className="max-w-512 mt-16">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ullamcorper nisl erat, vel convallis elit fermentum pellentesque. Sed mollis velit
-                        facilisis facilisis.
+                        Ferramenta de compartilhamento de conhecimento da ConnectCom, aqui você encontrará 
+                        soluções para o que precisar.
                     </Typography>
                 </FuseAnimate>
             </div>
