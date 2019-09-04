@@ -4,6 +4,7 @@ import {TextFieldFormsy} from '@fuse';
 import Formsy from 'formsy-react';
 import * as authActions from 'app/auth/store/actions';
 import {useDispatch, useSelector} from 'react-redux';
+import Pesquisa from 'app/main/pesquisa/Pesquisa';
 
 function JWTLoginTab(props)
 {
@@ -35,7 +36,8 @@ function JWTLoginTab(props)
 
     function handleSubmit(model)
     {
-        dispatch(authActions.submitLogin(model));
+
+        //dispatch(authActions.submitLogin(model));
     }
 
     return (
@@ -84,7 +86,8 @@ function JWTLoginTab(props)
                 />
 
                 <Button
-                    type="submit"
+                    //type="submit"
+                    onClick={<Pesquisa/>}
                     variant="contained"
                     color="primary"
                     className="w-full mx-auto mt-16 normal-case"
@@ -98,33 +101,7 @@ function JWTLoginTab(props)
             </Formsy>
 
             <div className="flex flex-col items-center pt-24">
-                <Typography className="text-14 font-600 py-8">
-                    Credentials
-                </Typography>
-
                 <Divider className="mb-16 w-256"/>
-
-                <table className="text-left w-256">
-                    <thead>
-                        <tr>
-                            <th><Typography className="font-600" color="textSecondary">Role</Typography></th>
-                            <th><Typography className="font-600" color="textSecondary">Username</Typography></th>
-                            <th><Typography className="font-600" color="textSecondary">Password</Typography></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><Typography>Admin</Typography></td>
-                            <td><Typography>admin</Typography></td>
-                            <td><Typography>admin</Typography></td>
-                        </tr>
-                        <tr>
-                            <td><Typography>Staff</Typography></td>
-                            <td><Typography>staff</Typography></td>
-                            <td><Typography>staff</Typography></td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
         </div>

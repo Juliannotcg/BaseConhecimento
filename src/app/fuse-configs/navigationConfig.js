@@ -28,10 +28,10 @@ const navigationConfig = [
                 'children': [
                     {
                         'id'   : 'analytics-dashboard',
-                        'title': 'Erro',
+                        'title': 'Incidente',
                         'type' : 'item',
                         'icon' : 'bug_report',
-                        'url'  : '/apps/dashboards/analytics'
+                        'url'  : '/incidente'
                     },
                     {
                         'id'   : 'project-dashboard',

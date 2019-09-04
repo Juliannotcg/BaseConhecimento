@@ -5,21 +5,25 @@ import { FuseAnimate } from '@fuse';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function OrgaoHeader(props) {
+function IncidenteHeader(props) {
     const mainTheme = useSelector(({ fuse }) => fuse.settings.mainTheme);
+
+    const [abrir, setAbrir] = useState(false);
+    const [isEdicao, setIsEdicao] = useState(false);
 
     const { handlerEdicao, openDialog} = props;
  
+
     return (
         <React.Fragment>
             <div className="flex flex-1 w-full items-center justify-between">
 
                 <div className="flex items-center">
                     <FuseAnimate animation="transition.expandIn" delay={300}>
-                        <Icon className="text-32 mr-0 sm:mr-12">location_city</Icon>
+                        <Icon className="text-32 mr-0 sm:mr-12">bug_report</Icon>
                     </FuseAnimate>
                     <FuseAnimate animation="transition.slideLeftIn" delay={300}>
-                        <Typography className="hidden sm:flex" variant="h6">Orgãos</Typography>
+                        <Typography className="hidden sm:flex" variant="h6">Incidentes</Typography>
                     </FuseAnimate>
                 </div>
 
@@ -58,4 +62,4 @@ function OrgaoHeader(props) {
     );
 }
 
-export default OrgaoHeader;
+export default IncidenteHeader;

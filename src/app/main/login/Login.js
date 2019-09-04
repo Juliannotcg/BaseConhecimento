@@ -53,7 +53,7 @@ function Login()
 
                     <CardContent className="flex flex-col items-center justify-center p-32 md:p-48 md:pt-128 ">
 
-                        <Typography variant="h6" className="text-center md:w-full mb-48">LOGIN TO YOUR ACCOUNT</Typography>
+                        <Typography variant="h6" className="text-center md:w-full mb-48">ENTRE COM SUA CONTA</Typography>
 
                         <Tabs
                             value={selectedTab}
@@ -71,9 +71,7 @@ function Login()
                         {selectedTab === 0 && <JWTLoginTab/>}
 
                         <div className="flex flex-col items-center justify-center pt-32">
-                            <span className="font-medium">Don't have an account?</span>
-                            <Link className="font-medium" to="/register">Create an account</Link>
-                            <Link className="font-medium mt-8" to="/">Back to Dashboard</Link>
+                            <Link className="font-medium" to="/pesquisa">ENTRAR SEM LOGIN</Link>
                         </div>
 
                     </CardContent>
