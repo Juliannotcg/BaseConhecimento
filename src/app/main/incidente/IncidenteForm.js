@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Tab, Tabs, TextField, InputAdornment, Icon, Typography } from '@material-ui/core';
+import { Button, Tab, Tabs, TextField, InputAdornment, Icon, Typography,IconButton } from '@material-ui/core';
 import Select from '@material-ui/core/Select';
-import { orange } from '@material-ui/core/colors';
+import { orange, red } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/styles';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { FuseAnimate, FusePageCarded, FuseChipSelect, FuseUtils } from '@fuse';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useForm } from '@fuse/hooks';
+import {useDispatch, useSelector} from 'react-redux';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import _ from '@lodash';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
+
 const useStyles = makeStyles(theme => ({
     productImageFeaturedStar: {
         position: 'absolute',
         top: 0,
         right: 0,
-        color: orange[400],
+        color: '#ff0000',
         opacity: 0
     },
     productImageUpload: {
@@ -48,9 +50,31 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const data = {
+    id              : FuseUtils.generateGUID(),
+    name            : '',
+    handle          : '',
+    description     : '',
+    categories      : [],
+    tags            : [],
+    images          : [],
+    priceTaxExcl    : 0,
+    priceTaxIncl    : 0,
+    taxRate         : 0,
+    comparedPrice   : 0,
+    quantity        : 0,
+    sku             : '',
+    width           : '',
+    height          : '',
+    depth           : '',
+    weight          : '',
+    extraShippingFee: 0,
+    active          : true
+};
+
 function IncidenteForm(props) {
 
-
+    const dispatch = useDispatch();
     const classes = useStyles(props);
 
     const [tabValue, setTabValue] = useState(0);
@@ -60,6 +84,12 @@ function IncidenteForm(props) {
         age: '',
         name: 'hai',
     });
+
+    useEffect(() => {
+        setForm(data);
+       
+    }, [data]);
+
 
     function handleChangeTab(event, tabValue) {
         setTabValue(tabValue);
@@ -72,8 +102,42 @@ function IncidenteForm(props) {
         }));
     }
 
+    function setFeaturedImage(id)
+    {
+        setForm(_.set({...form}, 'featuredImageId', id));
+    }
+
+    function handleUploadChange(e)
+    {
+        const file = e.target.files[0];
+        if ( !file )
+        {
+            return;
+        }
+        const reader = new FileReader();
+        reader.readAsBinaryString(file);
+
+        reader.onload = () => {
+            setForm(_.set({...form}, `images`,
+                [
+                    {
+                        'id'  : FuseUtils.generateGUID(),
+                        'url' : `data:${file.type};base64,${btoa(reader.result)}`,
+                        'type': 'image'
+                    },
+                    ...form.images
+                ]
+            ));
+        };
+
+        reader.onerror = function () {
+            console.log("error on load image");
+        };
+    }
+
 
     return (
+        form && (
         <React.Fragment>
             <Tabs
                 value={tabValue}
@@ -88,6 +152,7 @@ function IncidenteForm(props) {
                 <Tab className="h-64 normal-case" label="Anexos" />
                 <Tab className="h-64 normal-case" label="Dados Técnicos" />
                 <Tab className="h-64 normal-case" label="Usuário" />
+                <Tab className="h-64 normal-case" label="Solução" />
 
             </Tabs>
             <div className="p-16 sm:p-24 max-w-2xl">
@@ -139,6 +204,7 @@ function IncidenteForm(props) {
                             className="hidden"
                             id="button-file"
                             type="file"
+                            onChange={handleUploadChange}
                         />
                         <div className="flex justify-center sm:justify-start flex-wrap">
                             <label
@@ -151,6 +217,25 @@ function IncidenteForm(props) {
                             >
                                 <Icon fontSize="large" color="action">cloud_upload</Icon>
                             </label>
+                            {form.images.map(media => (
+                                <div
+                                    onClick={() => setFeaturedImage(media.id)}
+                                    className={
+                                        clsx(
+                                            classes.productImageItem,
+                                            "flex items-center justify-center relative w-128 h-128 rounded-4 mr-16 mb-16 overflow-hidden cursor-pointer shadow-1 hover:shadow-5",
+                                            (media.id === form.featuredImageId) && 'featured')
+                                    }
+                                    key={media.id}
+                                >
+                                    <IconButton className={classes.productImageFeaturedStar} >
+                                        <Icon >
+                                          delete
+                                         </Icon>
+                                    </IconButton>
+                                    <img className="max-w-none w-auto h-full" src={media.url} alt="product" />
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )}
@@ -258,11 +343,12 @@ function IncidenteForm(props) {
                             />
                         </div>
 
-                       
+
                     </div>
                 )}
             </div>
         </React.Fragment>
+        )
     )
 }
 

@@ -76,9 +76,12 @@ function IncidentesList(props) {
                         },
                         {
                             Header: "",
-                            width: 128,
+                            width: 150,
                             Cell: row => (
                                 <div className="flex items-center">
+                                      <IconButton>
+                                            <Icon>visibility</Icon>
+                                        </IconButton>
                                     <IconButton
                                         onClick={(ev) => {
                                             ev.stopPropagation();
