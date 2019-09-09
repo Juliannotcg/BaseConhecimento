@@ -3,12 +3,15 @@ import { Paper, Button, Input, Icon, Typography } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { FuseAnimate } from '@fuse';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as Actions from './store/actions/orgao.actions'
 
 function OrgaoHeader(props) {
     const mainTheme = useSelector(({ fuse }) => fuse.settings.mainTheme);
 
-    const { handlerEdicao, openDialog} = props;
+    const dispatch = useDispatch();
+
  
     return (
         <React.Fragment>
@@ -43,8 +46,7 @@ function OrgaoHeader(props) {
                     <Button
                         onClick={(ev) => {
                             ev.stopPropagation();
-                            openDialog(true);
-                            handlerEdicao(false);
+                            dispatch(Actions.openNewOrgaoDialog())
                         }}
                         component={Link}
                         className="whitespace-no-wrap"

@@ -160,25 +160,7 @@ export function removeOrgao(contactId)
 }
 
 
-export function removeOrgaos(contactIds)
-{
-    return (dispatch, getState) => {
 
-        const {routeParams} = getState().contactsApp.contacts;
-
-        const request = axios.post('/api/contacts-app/remove-contacts', {
-            contactIds
-        });
-
-        return request.then((response) =>
-            Promise.all([
-                dispatch({
-                    type: REMOVE_ORGAOS
-                })
-            ]).then(() => dispatch(getOrgaos(routeParams)))
-        );
-    };
-}
 
 
 

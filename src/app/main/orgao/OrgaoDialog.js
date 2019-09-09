@@ -20,17 +20,12 @@ function OrgaoDialog(props)
 
     const initDialog = useCallback(
         () => {
-            /**
-             * Dialog type: 'edit'
-             */
+            
             if ( orgaoDialog.type === 'edit' && orgaoDialog.data )
             {
                 setForm({...orgaoDialog.data});
             }
 
-            /**
-             * Dialog type: 'new'
-             */
             if ( orgaoDialog.type === 'new' )
             {
                 setForm({
@@ -44,9 +39,6 @@ function OrgaoDialog(props)
     );
 
     useEffect(() => {
-        /**
-         * After Dialog Open
-         */
         if ( orgaoDialog.props.open )
         {
             initDialog();
@@ -56,7 +48,6 @@ function OrgaoDialog(props)
 
     function closeComposeDialog()
     {
-        console.log("Chegou no close")
         orgaoDialog.type === 'edit' ? dispatch(Actions.closeEditOrgaoDialog()) : dispatch(Actions.closeNewOrgaoDialog());
     }
 
