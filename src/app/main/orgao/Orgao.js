@@ -12,27 +12,27 @@ import { useDispatch, useSelector } from 'react-redux';
 function Orgao(props) {
 
     const dispatch = useDispatch();
-    const orgao = useSelector(({orgaoApp}) => orgaoApp.orgao);
-
-    useEffect(() => {
-        dispatch(Actions.getOrgao());
-    }, [dispatch]);
+    const orgao = useSelector(({ orgaoApp }) => orgaoApp.orgao);
 
     console.log(orgao);
 
+    useEffect(() => {
+        dispatch(Actions.getOrgaos());
+    }, [dispatch]);
+
     return (
-        <div>
-        <FusePageCarded
-            header={
-                <OrgaoHeader />
-            }
-            content={
-                orgao.data &&  <OrgaosList dados={orgao.data}/>
-            }
-            innerScroll
-        />
-         {orgao.rowEdit && <OrgaoDialog />}
-        </div>
+        <React.Fragment>
+            <FusePageCarded
+                header={
+                    <OrgaoHeader />
+                }
+                content={
+                    orgao.data && <OrgaosList dados={orgao.data} />
+                }
+                innerScroll
+            />
+            <OrgaoDialog />
+        </React.Fragment>
     );
 }
 export default withReducer('orgaoApp', reducer)(Orgao);

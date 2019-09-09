@@ -11,11 +11,6 @@ function OrgaosList(props) {
     const { handlerEdicao, openDialog, valorRows, dados} = props;
     const dispatch = useDispatch();
 
-    const openFormModalEdit = (value) => {
-        dispatch(Actions.openModal(true));
-        dispatch(Actions.openModalEdit(value));
-    };
-
     return (
         <React.Fragment>
             <FuseAnimate animation="transition.slideUpIn" delay={300}>
@@ -24,6 +19,12 @@ function OrgaosList(props) {
                     getTrProps={(state, rowInfo, column) => {
                         return {
                             className: "cursor-pointer",
+                             onClick  : (e, handleOriginal) => {
+                                if ( rowInfo )
+                                {
+                                    dispatch(Actions.openEditOrgaoDialog(rowInfo.original));
+                                }
+                        }
                         }
                     }}
                     data={dados}
@@ -48,7 +49,7 @@ function OrgaosList(props) {
                                     <IconButton
                                         onClick={(ev) => {
                                             ev.stopPropagation();
-                                            openFormModalEdit(row.original);
+                                            dispatch(Actions.openEditOrgaoDialog(row.original));
                                         }}
                                     >
                                         <Icon>edit</Icon>
