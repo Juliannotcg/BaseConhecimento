@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {useForm} from '@fuse/hooks';
 import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, IconButton, Typography, Toolbar, AppBar, Avatar } from '@material-ui/core';
-import If from '../utils/If';
+import reducer from './store/reducers';
+import * as Actions from './store/actions/orgao.actions'
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const defaultFormState = {
@@ -10,36 +12,25 @@ const defaultFormState = {
     descricao: ''
 };
 
+
 function OrgaoDialog(props) {
 
-    const [open, setOpen] = useState(false);
-    const {form, handleChange, setForm} = useForm(defaultFormState);
-    const {abrir, openDialog, rows, isEdicao} = props;
+    const {form, handleChange} = useForm(defaultFormState);
+    const {isEdicao} = props;
 
+    const dispatch = useDispatch();
+    const modal = useSelector(({orgaoApp}) => orgaoApp.orgao);
 
     const handleClose = () => {
-        setOpen(false);
-        openDialog(false);
+        dispatch(Actions.openModal(false));
     };
-
-    useEffect(() => {
-        if(abrir){
-            setOpen(true);
-        }
-
-        if(isEdicao){
-            setForm(rows);
-        }else{
-            setForm(defaultFormState);
-        }
-    }, [props]);
-
+  
     return (
         <Dialog
             classes={{
                 paper: "m-24"
             }}
-            open={open}
+            open={modal.openModal}
             onClose={handleClose}
             fullWidth
             maxWidth="xs">

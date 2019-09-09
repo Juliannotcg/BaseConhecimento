@@ -1,57 +1,38 @@
-import React,  {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { FusePageCarded } from '@fuse';
 import OrgaoHeader from './OrgaoHeader';
 import OrgaoDialog from './OrgaoDialog';
 import OrgaosList from './OrgaosList';
+import withReducer from 'app/store/withReducer';
+import reducer from './store/reducers';
+import * as Actions from './store/actions/orgao.actions'
+import { useDispatch, useSelector } from 'react-redux';
 
-function Orgao() {
 
-    const [abrir, setAbrir] = useState(false);
-    const [isEdicao, setIsEdicao] = useState(false);
-    const [rows, setRows] = useState();
+function Orgao(props) {
+
+    const dispatch = useDispatch();
+    const orgao = useSelector(({orgaoApp}) => orgaoApp.orgao);
 
     useEffect(() => {
-        setAbrir(false);
-      }, []);
-
-    function openDialog(event){
-        setAbrir(event);
-    }
-
-    const handlerEdicao = (event) => {
-        setIsEdicao(event);
-    }
-    
-    const valorRows = (row) => {
-        setRows(row);
-    }
+        dispatch(Actions.getOrgao());
+    }, [dispatch]);
 
     return (
-        <React.Fragment>
-            <FusePageCarded
-                header={
-                    <OrgaoHeader 
-                    openDialog={openDialog}
-                    handlerEdicao={handlerEdicao}
-                    />
-                }
-                content={
-                    <OrgaosList 
-                    handlerEdicao={handlerEdicao} 
-                    openDialog={openDialog}
-                    valorRows={valorRows}/>
-                }
-                innerScroll
-            />
-           {abrir && <OrgaoDialog 
-                      abrir={abrir}
-                      openDialog={openDialog}
-                      rows={rows}
-                      isEdicao={isEdicao}/>}
-        </React.Fragment>
+        <div>
+        <FusePageCarded
+            header={
+                <OrgaoHeader />
+            }
+            content={
+                orgao.data &&  <OrgaosList dados={orgao.data}/>
+            }
+            innerScroll
+        />
+            <OrgaoDialog />
+        </div>
     );
 }
-
-export default Orgao;
+export default withReducer('orgaoApp', reducer)(Orgao);
 
 
