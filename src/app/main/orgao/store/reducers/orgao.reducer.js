@@ -2,7 +2,8 @@ import * as Actions from '../actions/orgao.actions';
 
 const initialState = {
     data: null,
-    openModal: false
+    openModal: false,
+    rowEdit: null
 };
 
 const orgaoReducer = function (state = initialState, action) {
@@ -17,12 +18,19 @@ const orgaoReducer = function (state = initialState, action) {
             };
         }
         case 'OPEN_MODAL':
-            {
-                return {
-                    ...state,
-                    openModal: action.payload
-                };
-            }
+        {
+            return {
+                ...state,
+                openModal: action.payload
+            };
+        }   
+        case 'OPEN_MODAL_EDIT':
+        {
+            return {
+                ...state,
+                rowEdit: action.payload
+            };
+        }
         default:
         {
             return state;

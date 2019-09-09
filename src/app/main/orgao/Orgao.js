@@ -18,6 +18,8 @@ function Orgao(props) {
         dispatch(Actions.getOrgao());
     }, [dispatch]);
 
+    console.log(orgao);
+
     return (
         <div>
         <FusePageCarded
@@ -29,7 +31,7 @@ function Orgao(props) {
             }
             innerScroll
         />
-            <OrgaoDialog />
+         {orgao.rowEdit && <OrgaoDialog />}
         </div>
     );
 }

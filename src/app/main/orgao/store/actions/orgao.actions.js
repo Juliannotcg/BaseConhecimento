@@ -42,6 +42,15 @@ export function openModal(value)
         });
 }
 
+export function openModalEdit(value)
+{
+    return (dispatch) =>
+        dispatch({
+            type   : 'OPEN_MODAL_EDIT',
+            payload: value
+        });
+}
+
 
 
 

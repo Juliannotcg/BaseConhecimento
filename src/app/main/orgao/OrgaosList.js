@@ -11,8 +11,9 @@ function OrgaosList(props) {
     const { handlerEdicao, openDialog, valorRows, dados} = props;
     const dispatch = useDispatch();
 
-    const openFormModal = (value) => {
-        dispatch(Actions.openModal(value));
+    const openFormModalEdit = (value) => {
+        dispatch(Actions.openModal(true));
+        dispatch(Actions.openModalEdit(value));
     };
 
     return (
@@ -47,7 +48,7 @@ function OrgaosList(props) {
                                     <IconButton
                                         onClick={(ev) => {
                                             ev.stopPropagation();
-                                            openFormModal(true);
+                                            openFormModalEdit(row.original);
                                         }}
                                     >
                                         <Icon>edit</Icon>

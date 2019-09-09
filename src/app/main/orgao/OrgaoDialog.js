@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useForm} from '@fuse/hooks';
 import { TextField, Button, Dialog, DialogActions, DialogContent, Icon, IconButton, Typography, Toolbar, AppBar, Avatar } from '@material-ui/core';
-import reducer from './store/reducers';
 import * as Actions from './store/actions/orgao.actions'
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,8 +21,17 @@ function OrgaoDialog(props) {
     const modal = useSelector(({orgaoApp}) => orgaoApp.orgao);
 
     const handleClose = () => {
+        dispatch(Actions.openModalEdit(null));
         dispatch(Actions.openModal(false));
     };
+
+    useEffect(() => {
+
+        if(modal.rowEdit.nome){
+            form.nome = modal.rowEdit.nome;
+        }
+
+    }, [dispatch, modal]);
   
     return (
         <Dialog
