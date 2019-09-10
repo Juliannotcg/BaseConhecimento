@@ -16,6 +16,7 @@ function OrgaoDialog(props)
     const dispatch = useDispatch();
     const orgaoDialog = useSelector(({orgaoApp}) => orgaoApp.orgao.orgaoDialog);
 
+    console.log("Renderizando", orgaoDialog)
     const {form, handleChange, setForm} = useForm(defaultFormState);
 
     const initDialog = useCallback(
@@ -48,6 +49,7 @@ function OrgaoDialog(props)
 
     function closeComposeDialog()
     {
+        console.log("Fechar", orgaoDialog.type)
         orgaoDialog.type === 'edit' ? dispatch(Actions.closeEditOrgaoDialog()) : dispatch(Actions.closeNewOrgaoDialog());
     }
 
@@ -85,16 +87,10 @@ function OrgaoDialog(props)
             <AppBar position="static" elevation={1}>
                 <Toolbar className="flex w-full">
                     <Typography variant="subtitle1" color="inherit">
-                        {orgaoDialog.type === 'new' ? 'Novo Orgao' : 'Editar Orgao'}
+                        {orgaoDialog.type === 'new' ? 'Novo Orgão' : `Editar Orgão: ${form.nome}`}
                     </Typography>
                 </Toolbar>
-                <div className="flex flex-col items-center justify-center pb-24">
-                    {orgaoDialog.type === 'edit' && (
-                        <Typography variant="h6" color="inherit" className="pt-8">
-                            {form.nome}
-                        </Typography>
-                    )}
-                </div>
+      
             </AppBar>
             <form noValidate onSubmit={handleSubmit} className="flex flex-col overflow-hidden">
                 <DialogContent classes={{root: "p-24"}}>
@@ -119,6 +115,7 @@ function OrgaoDialog(props)
 
                     <div className="flex">
                         <div className="min-w-48 pt-20">
+                            <Icon color="action">account_circle</Icon>
                         </div>
                         <TextField
                             className="mb-24"

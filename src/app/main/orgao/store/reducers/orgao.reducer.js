@@ -86,7 +86,7 @@ const orgaoReducer = function (state = initialState, action) {
             {
                 return {
                     ...state,
-                    contactDialog: {
+                    orgaoDialog: {
                         type : 'edit',
                         props: {
                             open: false

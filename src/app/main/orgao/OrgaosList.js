@@ -19,12 +19,6 @@ function OrgaosList(props) {
                     getTrProps={(state, rowInfo, column) => {
                         return {
                             className: "cursor-pointer",
-                             onClick  : (e, handleOriginal) => {
-                                if ( rowInfo )
-                                {
-                                    dispatch(Actions.openEditOrgaoDialog(rowInfo.original));
-                                }
-                        }
                         }
                     }}
                     data={dados}
@@ -48,7 +42,6 @@ function OrgaosList(props) {
                                 <div className="flex items-center">
                                     <IconButton
                                         onClick={(ev) => {
-                                            ev.stopPropagation();
                                             dispatch(Actions.openEditOrgaoDialog(row.original));
                                         }}
                                     >
