@@ -14,8 +14,6 @@ function Orgao(props) {
     const dispatch = useDispatch();
     const orgao = useSelector(({ orgaoApp }) => orgaoApp.orgao);
 
-    console.log("App", orgao);
-
     useEffect(() => {
         dispatch(Actions.getOrgaos());
     }, [dispatch]);

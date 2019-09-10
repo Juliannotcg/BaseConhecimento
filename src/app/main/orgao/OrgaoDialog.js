@@ -16,7 +16,6 @@ function OrgaoDialog(props)
     const dispatch = useDispatch();
     const orgaoDialog = useSelector(({orgaoApp}) => orgaoApp.orgao.orgaoDialog);
 
-    console.log("Renderizando", orgaoDialog)
     const {form, handleChange, setForm} = useForm(defaultFormState);
 
     const initDialog = useCallback(
@@ -49,7 +48,6 @@ function OrgaoDialog(props)
 
     function closeComposeDialog()
     {
-        console.log("Fechar", orgaoDialog.type)
         orgaoDialog.type === 'edit' ? dispatch(Actions.closeEditOrgaoDialog()) : dispatch(Actions.closeNewOrgaoDialog());
     }
 
