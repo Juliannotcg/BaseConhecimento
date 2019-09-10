@@ -137,7 +137,7 @@ function OrgaoDialog(props)
                             type="submit"
                             disabled={!canBeSubmitted()}
                         >
-                            Add
+                            Adicionar
                         </Button>
                     </DialogActions>
                 ) : (
@@ -149,7 +149,7 @@ function OrgaoDialog(props)
                             onClick={handleSubmit}
                             disabled={!canBeSubmitted()}
                         >
-                            Save
+                            Salvar
                         </Button>
                         <IconButton
                             onClick={handleRemove}

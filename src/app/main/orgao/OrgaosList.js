@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Checkbox, Icon, IconButton, Typography } from '@material-ui/core';
+import React from 'react';
+import { Icon, IconButton } from '@material-ui/core';
 import { FuseAnimate } from '@fuse';
 import ReactTable from "react-table";
 import * as Actions from './store/actions/orgao.actions'
@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 
 function OrgaosList(props) {
     
-    const { handlerEdicao, openDialog, valorRows, dados} = props;
     const dispatch = useDispatch();
 
     return (
@@ -21,7 +20,7 @@ function OrgaosList(props) {
                             className: "cursor-pointer",
                         }
                     }}
-                    data={dados}
+                    data={props.dados}
                     columns={[
                         {
                             Header: "Nome",
@@ -30,7 +29,7 @@ function OrgaosList(props) {
                             className: "font-bold"
                         },
                         {
-                            Header: "Descrção",
+                            Header: "Descrição",
                             accessor: "descricao",
                             filterable: true,
                             className: "font-bold"

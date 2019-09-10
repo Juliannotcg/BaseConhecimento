@@ -52,7 +52,7 @@ function OrgaoHeader(props) {
                         className="whitespace-no-wrap"
                         variant="contained">
                         <span className="hidden sm:flex">Adicionar</span>
-                        <span className="flex sm:hidden">New</span>
+                        <span className="flex sm:hidden">Add</span>
                     </Button>
                 </FuseAnimate>
             </div>
