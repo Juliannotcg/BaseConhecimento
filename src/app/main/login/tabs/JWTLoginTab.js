@@ -36,8 +36,7 @@ function JWTLoginTab(props)
 
     function handleSubmit(model)
     {
-
-        //dispatch(authActions.submitLogin(model));
+        dispatch(authActions.submitLogin(model));
     }
 
     return (
@@ -70,7 +69,7 @@ function JWTLoginTab(props)
                 <TextFieldFormsy
                     className="mb-16"
                     type="password"
-                    name="password"
+                    name="senha"
                     label="Password"
                     validations={{
                         minLength: 4
@@ -86,8 +85,8 @@ function JWTLoginTab(props)
                 />
 
                 <Button
-                    //type="submit"
-                    onClick={<Pesquisa/>}
+                    type="submit"
+                    //onClick={<Pesquisa/>}
                     variant="contained"
                     color="primary"
                     className="w-full mx-auto mt-16 normal-case"

@@ -13,6 +13,7 @@ const login = function (state = initialState, action) {
     {
         case Actions.LOGIN_SUCCESS:
         {
+            console.log("rEDUCER", action)
             return {
                 ...initialState,
                 success: true

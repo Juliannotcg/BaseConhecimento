@@ -6,11 +6,13 @@ import * as Actions from 'app/store/actions';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
-export function submitLogin({email, password})
+export function submitLogin({email, senha})
 {
+    console.log(email, senha);
     return (dispatch) =>
-        jwtService.signInWithEmailAndPassword(email, password)
+        jwtService.signInWithEmailAndPassword(email, senha)
             .then((user) => {
+                console.log("Dentro JWT", user);
                     dispatch(setUserData(user));
 
                     return dispatch({

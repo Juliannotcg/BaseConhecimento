@@ -20,6 +20,7 @@ const user = function (state = initialState, action) {
     {
         case Actions.SET_USER_DATA:
         {
+            console.log("SET User",  action)
             return {
                 ...initialState,
                 ...action.payload
